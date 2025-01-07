@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<img src="{{ avataruri }}"> || Wątek "{{ groupname }}" | Ilość wpisów: {{ cnt }} | <a href="{{ path('discuss2_new', {'id': groupid, 'page': 1}) }}">Nowy wpis</a>
+<br /><br />
+
+Administratorzy:<br>
+
+{% for key, value in gcdn %}
+	{% if key == groupname %}
+		{% for key1, value1 in value %}
+			<a href="{{ path('userspace', {'uid': value1 }) }}">{{ key1 }}</a><br />
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+
+
+<br />
+<br />
+Opis:
+
+{% for key, value in abouts %}
+	{% if key == groupid %} {{ value }} {% endif %}
+{% endfor %}
+<br />
+Drzewko:
+
+{{ tree | raw }}
+
+
+
+{% endblock %}

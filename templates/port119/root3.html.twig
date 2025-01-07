@@ -1,0 +1,162 @@
+{% extends 'root3.html.twig' %}
+
+
+
+{% block body %}
+
+<nav class="navbar navbar-dark bg-dark">
+</nav>
+
+<div class="all row">
+<div class="lewa col-lg-8">
+  <div class="row ">
+
+    <div class="col-md-12">
+      <div class="top_color"><h5>wątki</h5></div>
+     <div class="p-3 border bg-light box table-responsive">
+
+
+<table class="table table-striped table-hover table-fixed">
+  <thead>
+    <tr>
+      <th scope="col">właściciel</th>
+      <th scope="col">avatar</th>
+      <th scope="col">nazwa</th>
+      <th scope="col">posty / ostatni</th>
+      <th scope="col">admini</th>
+
+
+      <th scope="col">opis</th>
+      <th scope="col">utworzono</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+	{% if allgroups %}
+		{% for ag in thread_allgroups %}
+                	<tr><td><a href="{{ path('userspace', {'uid': ag.owner.id}) }}"> {{ ag.owner }} </a></td><td><a href="{{ path('show_discuss', {'name': ag.name, 'page': 1}) }}"><img src="/groupavatar/{{ ag.id }}.jpeg"></a></td><td><a href="{{ path('show_discuss', {'name': ag.name, 'page': 1}) }}">{{ ag.name }}</a></td><td>{{ ccnt[ag.id] }} / {% if ccnt[ag.id] %}{{ lastf[ag.id] }} {% endif %}</td>
+			<td>
+			{% for k, v in gcdn %}
+				{% if k == ag.name %}
+					{% for k1, v1 in v %}
+                        			<a href="{{ path('userspace', {'uid': v1}) }}">{{ k1 }}</a><br />
+					{% endfor %}
+				{% endif %}
+			{% endfor %}	
+			</td>
+
+
+<td>{{ abouts[ag.id] }}</td>
+<td>{{ luty[ag.id] }}</td>
+</tr>
+
+		{% endfor %}
+	{% endif %}
+
+
+  </tbody>
+</table>
+
+
+     </div>
+   </div>
+ </div>
+
+</div>
+
+
+	<div class="prawa col-lg-4">
+		<div class="row gx-5">
+			<div class="col-md-12">
+				<div class="top_color"><h5>ostatnio komentowane</h5></div>
+					<div class="p-3 border bg-light box">
+						<table class="prawa table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Wątek</th>
+									<th scope="col">Autor</th>
+									<th scope="col">Tytuł</th>
+									<th scope="col">Treść</th>
+									<th scope="col">Data</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								{% for k, v in commcreatedat %}
+									<tr>
+										<td><a href="{{ path('show_discuss', {'name': commgids[k], 'page': 1}) }}">{{ commgids[k] }}</a></td>				
+										<td><a href="{{ path('userspace', {'uid': commacounts2[k] }) }}">{{ commaccounts[k] }}</a></td>
+										<td>{{ commtitles[k] }}</td>
+										<td>{{ commcontent[k] }}</td>
+										<td>{{ commcreatedat[k]|date('Y-m-d H-i-s') }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+
+
+
+						</table>
+					</div>
+
+
+
+
+
+
+
+
+        			<div class="top_color"><h5>najczęściej komentowane</h5></div>
+					<div class="p-3 border bg-light box">
+						<table class="prawa table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Wątek</th>
+									<th scope="col" align="right">Komentarzy</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for k, v in cntg %}
+									<tr><td><a href="{{ path('show_discuss', {'name': k, 'page':1}) }}">{{ k }}</a></td><td align=right>{{ v }}</td></tr>
+								{% endfor %}
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+
+				</div>
+                                <div class="top_color"><h5>najczęściej odwiedzane</h5></div>
+
+					<div class="p-3 border bg-light box">
+						<table class="prawa table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Wątek</th>
+									<th scope="col">Licznik</th>
+								</tr>
+							</thead>
+							<tbody>
+{% for k, v in ghitsarr %}
+<tr><td><a href="{{ path('show_discuss', {'name': k, 'page': 1}) }}">{{ k }}</a></td><td align=right>{{ v }}</td></tr>
+{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+     </div>
+   </div>
+ </div>
+
+augue eget arcu dictum varius duis at consectetur lorem donec massa sapien faucibus et molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a cras semper auctor neque vitae tempus quam pellentesque nec nam aliquam sem et tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt vitae semper quis lectus nulla at volutpat diam ut venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin fermentum leo vel orci porta non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam non nisi est sit amet facilisis magna etiam tempor orci eu lobortis elementum nibh tellus molestie nunc non blandit massa enim nec dui nunc mattis enim ut tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam 
+
+<hr>
+
+{{ navi|raw }}
+
+{% endblock %}

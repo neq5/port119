@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+<br /><br />
+
+Pokaż wątek: {{ group.name }}
+
+<br /><br />
+
+<table border=1>
+	<tr><td>Właściciel</td><td>{{ group.owner }}</td></tr>
+	<tr><td>Aktywny</td><td>
+
+	{% if group.active != false %}
+		aktywny
+	{% else %}
+		nieaktywny
+	{% endif %}
+
+	</td></tr>
+
+
+	<tr><td>Otwarta</td><td>
+	
+	{% if group.open != false %}
+		otwarty
+	{% else %}
+		zamknięty
+	{% endif %}
+
+	</td></tr>
+
+	<tr><td>Utworzono</td><td>{{ group.createdat|date('Y-m-d H-i-s') }}</td></tr>
+
+	<tr><td>Opis</td><td>{{ about }}</td></tr>
+
+	<tr><td>Admini</td><td>
+
+	{% for key, value in gcdn %}
+		{% if key == group.name %}
+			{% for key1, value1 in value %}
+				{{ key1 }}<br />
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+
+	</td></tr>
+</table>
+
+<br /><br />
+
+<a href="{{ path('group_edit', {'id': group.id})}}">edytuj</a> <a href="{{ path('group_delete', {'id': group.id}) }}">usuń</a>
+
+
+
+{% endblock %}

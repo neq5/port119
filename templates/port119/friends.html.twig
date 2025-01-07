@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Friends
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn btnoutline-secondary">Dodaj</button>
+{{ form_end(form) }}
+
+
+Lista znajomych:
+<br />
+
+<table border=1>
+<tr><td>User</td><td>Imię</td><td>Nazwisko</td><td>Akcja</td></tr>
+{% for k, v in frepo %}
+<tr>
+	<td>{% if av[k] != "BRAK" %} <img src="{{ av[k] }}">{% endif %}{{ frepo[k].user.username }}</td>
+	<td>{{ frepo[k].user.firstname }}</td>
+	<td>{{ frepo[k].user.lastname }}</td>
+	<td><a href="{{ path('removefriend', {'uid': frepo[k].user.id, 'pid': frepo[k].party.id}) }}">Usuń</a></td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+<br />
+<br />
+<br />
+Zostałeś zaproszony przez:
+<br />
+
+
+<br />
+
+<table border=1>
+<tr><td>User</td><td>Imię</td><td>Nazwisko</td><td>Akcja</td></tr>
+{% for k, v in frepotoconfirm %}
+<tr>
+	<td>{% if cav[k] != "BRAK" %} <img src="{{ cav[k] }}">{% endif %}{{ frepotoconfirm[k].user.username }}</td>
+	<td>{{ frepotoconfirm[k].user.firstname }}</td>
+	<td>{{ frepotoconfirm[k].user.lastname }}</td>
+	<td><a href="{{ path('confirm', {'fid': frepotoconfirm[k].id, 'uid': frepotoconfirm[k].user.id, 'pid': frepotoconfirm[k].party.id}) }}">potwierdź</a> <a href="{{ path('cancel', {'fid': frepotoconfirm[k].id}) }}">anuluj</a> </td>
+</tr>
+{% endfor %}
+
+</table>
+
+----
+<br />
+
+Wysłałeś zaproszenie do:
+<br />
+
+<table border=1>
+<tr><td>User</td><td>Imię</td><td>Nazwisko</td><td>Akcja</td></tr>
+
+{% for k, v in freporequested %}
+<tr>
+	<td>{% if rav[k] != "BRAK" %} <img src="{{ rav[k] }}">{% endif %}{{ freporequested[k].party.username }}</td>
+	<td>{{ freporequested[k].party.firstname }}</td>
+	<td>{{ freporequested[k].party.lastname }}</td>
+	<td><a href="{{ path('cancel', {'fid': freporequested[k].id}) }}">anuluj</a> </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

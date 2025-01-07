@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+obrazków: {{ picscnt }} komentarzy: {{ accnt }}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn bntouline-secondary">Wrzuć obrazki</button>
+{{ form_end(form) }}
+
+
+{% if picscnt == 0 %}
+brak obrazków<br>
+
+{% else %}
+
+
+<form name="gmd" method="post" action="{{ path('user_gallery_content_mass_delete', {'uid': uid, 'gid': gid}) }}">
+<input type="button" value="zaznacz wszystkie" onclick="checkboxesAll('gmd',true);"/>
+<input type="button" value="odznacz wszystkie" onclick="checkboxesAll('gmd',false);"/><br /><br />
+
+<button type="submit" class="btn btnoutline-secondary">Usuń</button><br /><br />
+
+{% for k, v in pics %}
+
+
+<a href="/gallery/{{ uid }}/{{ gid }}/orig/{{ v }}">
+<img src="/gallery/{{ uid }}/{{ gid }}/min/{{ v }}">
+</a> {% if titles2[v] is defined %} {{ titles2[v] }} {% else %}brak tytułu{% endif %} || <a href="{{ path('user_gallery_title_set', {'uid': uid, 'gid': gid, 'file': v}) }}">ustaw tytuł</a> || <a href="{{ path('user_gallery_comment', {'uid': uid, 'imgid': v}) }}">komentarze ({{ ccnt[v] }})</a> || <a href="{{ path('user_gallery_setavatar', {'uid': uid, 'gid': gid, 'id': v }) }}">użyj jako avatar</a> || <a href="{{ path('user_gallery_content_delete', {'uid': uid, 'gid': gid, 'file': v, 'uid': uid, 'gid': gid }) }}">Usuń obrazek</a> <input type="checkbox" name="{{ v }}" />
+<br>
+{% endfor %}
+
+
+{% endif %}
+
+
+</form>
+
+
+
+
+<script>
+function checkboxesAll(f,b){ //gdzie f - nazwa lub numer formularza w dokumencie html, b - wartosc typu boolean oznaczajaca true dla zanaczenia wszytkich, false dla odznaczenia
+   var e = document.forms[f].elements;
+   for (var i=0;i<e.length;i++) {
+      if (e[i].type=="checkbox") e[i].checked = b;
+   }
+}
+</script>
+
+
+
+{% endblock %}

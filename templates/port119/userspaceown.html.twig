@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ username }} to Ty, 
+
+Odwiedziny:<br />
+<table border=1>
+<tr><td>Data</td><td>Gość</td><td>Avatar</td></tr>
+{% for k, v in repo %}
+<tr><td>{{ v.createdat|date('Y-m-d H:i:s') }}</td><td><a href="{{ path('userspace', {'uid': v.visitor.id}) }}">{{ v.visitor }}</a></td><td><img src="/avatar/{{ v.visitor.id }}.jpeg"></td></tr>
+
+
+{% endfor %}
+
+</table>
+
+
+<br /><br />
+
+przejdź do sekcji:
+<br />
+<a href="{{ path('wall') }}">Tablica</a><br>
+<a href="{{ path('user_gallery') }}">Galeria</a><br> 
+<a href="{{ path('friends2') }}">Znajomi</a><br>
+<a href="{{ path('user_password') }}">Hasło</a><br>
+<a href="{{ path('user_avatar') }}">Awatar</a><br>
+<a href="{{ path('user_profile') }}">Profil</a><br>
+
+{% endblock %}

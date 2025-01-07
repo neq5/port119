@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Nowy album
+
+{{ form_start(albumsform) }}
+{{ form_widget(albumsform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz dane</button>
+{{ form_end(albumsform) }}
+
+{% endblock %}

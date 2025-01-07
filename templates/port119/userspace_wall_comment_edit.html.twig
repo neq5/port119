@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ username }}
+
+{{ form_start(commentform) }}
+{{ form_widget(commentform) }}
+<button type="submit" class="btn btnoutline-secondary">Dodaj</button>
+{{ form_end(commentform) }}
+
+{% endblock %}

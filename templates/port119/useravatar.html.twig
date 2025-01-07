@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if avatar != "brak" %}
+<img src="{{ avatar|raw }}">
+{% endif %}
+
+Awatar
+
+{{ form_start(avatarform) }}
+{{ form_widget(avatarform) }}
+<button type="submit" class="btn btnoutline-secondary">wrzuć obrazek</button>
+{{ form_end(avatarform) }}
+
+{% endblock %}

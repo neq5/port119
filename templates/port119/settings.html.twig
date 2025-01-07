@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if avatar != "brak" %}
+<img src=" {{ avatar|raw }} ">
+{% endif %}
+
+Wgraj fotkę (plik jpg)
+{{ form_start(avatarform) }}
+{{ form_widget(avatarform) }}
+<button type=submit class="btn btnoutline-secondary">Wrzuć</button>
+{{ form_end(avatarform) }}
+<br /><br />
+
+
+Zmiana hasła
+
+{{ form_start(passform) }}
+{{ form_widget(passform) }}
+<button type="submit" class="btn btnoutline-secondary">Zmień hasło</button>
+{{ form_end(passform) }}
+
+<br /><br />
+
+Zmiana danych
+{{ form_start(settingsform) }}
+{{ form_widget(settingsform) }}
+<button type=submit class="btn btnoutline-secondary">Zmień dane</button>
+{{ form_end(settingsform) }}
+
+<rbr /><br />
+
+
+{% endblock %}

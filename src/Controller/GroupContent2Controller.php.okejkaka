@@ -1,0 +1,356 @@
+<?php
+
+namespace App\Controller;
+
+#neq
+
+use Symfony\Component\HttpFoundation\Response;
+
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Symfony\Component\Validator\Constraints\DateTime;
+
+use App\Entity\Content2;
+use App\Entity\Group;
+use App\Entity\User;
+
+use App\Form\GroupContent2Type;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Gedmo\Tree\Entity\Repository\AbstractTreeRepository;
+use Gedmo\Tree\Entity\Repository\MaterializedPathRepository;
+
+use Gedmo\Tree\TreeListener;
+
+use Knp\Component\Pager\PaginatorInterfacennnnnn;
+
+
+
+
+class GroupContent2Controller extends Controller
+{
+	public function index(Request $request, $name)
+	{
+    $user = $this->getUser();
+    $gid = $this->getDoctrine()->getRepository(Group::class)->findOneBy(['name' => $name]);
+    $groupid = $gid->getId();
+    $em = $this->getDoctrine()->getManager();
+
+
+	$repo = $em->getRepository('App\Entity\Content2');
+
+
+	$query = $em
+		->createQueryBuilder()
+		->select('node')
+		->from('App\Entity\Content2', 'node')
+		#->orderBy('node.root, node.lft, node.created_at', 'ASC')
+		#->orderBy('node.root, node.lft, node.created_at', 'ASC')
+		#->orderBy('node.id, node.root, node.lft', 'ASC')
+		#->orderBy('node.created_at, node.root', 'ASC')
+		->andwhere('node.groups = :group')
+		->setParameter('group', $groupid)
+		->getQuery();
+
+	$options = array(
+		'decorate' => true,
+		'rootOpen' => '<ul class="lista">',
+    'rootClose' => '</ul>',
+    #'childOpen' => '<li>',
+    #'childClose' => '</li>',
+    'childOpen' => '<li><br /><table border=1><tr><td>',
+    'childClose' => '</td></tr></table><br /></li>',
+    'nodeDecorator' => function($node) {
+
+       $caobj = $node['created_at'];
+       $contentdata = file_get_contents($this->getParameter('contentdatadir') . "/" . $node['id']);
+
+			$uid = $this->getDoctrine()->getRepository(Content2::class)->findOneBy(['id' => $node['id']]);
+
+			$isdeleted = $uid->getDeleted();
+
+			$uid = $uid->getAccounts();
+			#$useruid = $uid->getAccounts();
+
+			$uid = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $uid]);
+
+			$userid = $uid->getId();
+
+			$uid = $uid->getUsername();
+
+
+			$editmark = 0;
+
+			if($uid == $this->getUser())
+			{
+				$editmark = 1;
+			}
+
+
+			#$avatarfile = $this->getParameter('avatardir') . "/" . $userid . ".jpeg";
+
+
+                        $gid = $this->getDoctrine()->getRepository(Content2::class)->findOneBy(['id' => $node['id']]);
+                        $gid = $gid->getGroups();
+
+                        $gid = $this->getDoctrine()->getRepository(Group::class)->findOneBy(['id' => $gid]);
+
+                        $gid = $gid->getId();
+
+
+			#$avataruri = "/groupavatar/" . $gid . ".jpeg";
+
+			#var_dump($userid); die;
+
+			$avataruri = "/avatar/" . $userid . ".jpeg";
+
+
+			if(file_exists("/var/www/port119/public" . $avataruri))
+			{
+				$avatar = $avataruri;
+			} else
+			{
+				$avatar = null;
+			}
+
+
+			$r = array();
+			$rr = "";
+
+			if(!$isdeleted)
+			{
+				if($avatar)
+				{
+					$return = "<img src=" . $avatar . ">" . " | data: " . $caobj->format('Y-m-d H:i:s') . " | " . "autor: " . $uid . " | tytuł: " . $node['title'] . " | <a href=/d2/" . $node['id'] . "/" . $gid . "/reply>odpowiedz</a> ";
+					$r[] = $return;
+				} else
+				{
+					$return = "data: " . $caobj->format('Y-m-d H:i:s') . " | " . "autor: " . $uid .  " | tytuł: " . $node['title'] . " | <a href=/d2/" . $node['id'] . "/" . $gid . "/reply>odpowiedz</a> ";
+
+					$r[] = $return;
+				}
+
+				if($editmark) {
+					$return = $return . "<a href=/d2/" . $node['id'] . "/edit>edytuj</a> <a href=/d2/" . $node['id'] . "/delete>skasuj</a>"; 
+					$r[] = "<a href=/d2/" . $node['id'] . "/edit>edytuj</a> <a href=/d2/" . $node['id'] . "/delete>skasuj</a>";
+				}
+
+			 $return .= " | TREŚĆ: " . $contentdata . "<br />";
+			} else 
+			{
+				$return = "data: " . $caobj->format('Y-m-d H:i:s') . " | " . "autor: " . $uid . " POST SKASOWANY";
+				$r[] = "data: " . $caobj->format('Y-m-d H:i:s') . " | " . "autor: " . $uid . " POST SKASOWANY";
+			}
+
+		while(list($k, $v) = each($r)) {
+			$rr .= $v;
+		}
+
+			#echo $rr; die;
+
+		#return $rr . "<br />";
+
+		return $return;
+
+    }
+
+	);
+
+
+	$cnt = count($query->getArrayResult());
+
+	$tree = $repo->buildTree($query->getArrayResult(), $options);
+
+
+	return $this->render('port119/content2.html.twig', [ 'username' => $user, 'cnt' => $cnt, 'groupname' => $name, 'groupid' => $gid->getId() , 'tree' => $tree]);
+	}
+
+	public function reply(Request $request, Content2 $cid, Group $gid)
+	{
+		$group_id = $gid->getId();
+		$parent_id = $cid->getId();
+		$userid = $this->getUser()->getId();
+
+		$username = $this->getUser();
+	
+		$user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $userid]);
+
+		$eemail = $user->getEmail();
+
+		$contentobj = new Content2();
+
+		$contentform = $this->createForm(GroupContent2Type::class, $contentobj);
+		$contentform->handleRequest($request);
+
+		if($contentform->isSubmitted() && $contentform->isValid())
+		{
+			$title = $contentform->get('title')->getData();
+			$content = $contentform->get('content')->getData();
+
+			$contentobj->setTitle($title);
+			$contentobj->setGroups($gid);
+			$contentobj->setAccounts($this->getUser());
+			$contentobj->setCreatedAt(new \DateTime());
+
+			$contentobj->setParent($cid);
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($contentobj);
+			$em->flush();
+		
+			if($contentform->get('content')->getData())
+			{
+				$contentfile = $this->getParameter('contentdatadir') . "/" . $contentobj->getId();
+
+				if(file_exists($contentfile))
+				{
+					unlink($contentfile);
+					file_put_contents($contentfile, $contentform->get('content')->getData());
+				} else
+				{
+					file_put_contents($contentfile, $contentform->get('content')->getData());
+				}
+			}
+
+      $this->get('session')->getFlashBag()->add('success', 'Dodano odpowiedź do posta.');
+
+			return $this->redirectToRoute('discuss2', ['name' => $gid->getName()]);
+		}
+
+		return $this->render('port119/content2_reply.html.twig', [ 'username' => $username, 'contentform' => $contentform->createView()]);
+	}
+
+	public function new(Request $request, Group $id)
+	{
+		$groupid = $id->getId();
+		$userid = $this->getUser()->getId();
+
+		$username = $this->getUser();
+
+		$contentobj = new Content2();
+
+		$contentform = $this->createForm(GroupContent2Type::class, $contentobj);
+		$contentform->handleRequest($request);
+
+		if($contentform->isSubmitted() && $contentform->isValid())
+		{
+			$title = $contentform->get('title')->getData();
+			$content = $contentform->get('content')->getData();
+
+			$contentobj->setTitle($title);
+			$contentobj->setGroups($id);
+			$contentobj->setAccounts($this->getUser());
+			$contentobj->setCreatedAt(new \DateTime());
+
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($contentobj);
+			$em->flush();
+
+			if($contentform->get('content')->getData())
+			{
+				$contentfile = $this->getParameter('contentdatadir') . "/" . $contentobj->getId();
+
+				if(file_exists($contentfile))
+				{
+					unlink($contentfile);
+					file_put_contents($contentfile, $contentform->get('content')->getData());
+				} else
+				{
+					file_put_contents($contentfile, $contentform->get('content')->getData());
+				}
+			}
+			
+      $this->get('session')->getFlashBag()->add('success', 'Post dodany.');
+
+			return $this->redirectToRoute('discuss2', ['name' => $id->getName()]);
+		}
+
+		return $this->render('port119/content2_new.html.twig', [ 'username' => $username, 'contentform' => $contentform->createView()]);
+
+	}
+
+
+	public function edit(Request $request, Content2 $id)
+	{
+		$cid = $id->getId();
+		$username = $this->getUser();
+
+    $content = $this->getDoctrine()->getRepository(Content2::class)->find($id);
+
+
+		$cntowner = $content->getAccounts();
+		$userid = $this->getUser();
+
+
+		if($cntowner != $userid)
+		{
+			return new Response("don't hack me yo");
+		}
+
+		$contentform = $this->createForm(GroupContent2Type::class, $id);
+		$contentform->handleRequest($request);
+
+		$contentfile = $this->getParameter('contentdatadir') . "/" . $cid;
+
+		$em = $this->getDoctrine()->getManager();
+
+		if($contentform->isSubmitted() && $contentform->isValid())
+		{	
+			$content = $this->getDoctrine()->getRepository(Content2::class)->find($id);
+
+			if($contentform->get('title')->getData())
+			{
+				$content->setTitle($contentform->get('title')->getData());
+			}
+
+			if($contentform->get('content')->getData())
+			{
+				if(file_exists($contentfile))
+				{
+					unlink($contentfile);
+				}
+
+				file_put_contents($contentfile, $contentform->get('content')->getData());
+			}
+
+			$em->persist($content);
+			$em->flush();
+
+      $this->get('session')->getFlashBag()->add('success', 'Post zaktualizowany.');
+
+
+			return $this->redirectToRoute('discuss2', ['name' => $id->getGroups()->getName()]);
+		}
+
+		return $this->render('port119/content2_edit.html.twig', [ 'username' => $username, 'contentform' => $contentform->createView()]);
+
+	}
+
+	public function delete(Request $request, Content2 $id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$userid = $this->getUser();
+
+		$content = $this->getDoctrine()->getRepository(Content2::class)->find($id);
+
+		if($userid != $content->getAccounts())
+		{
+			return new Response("don't hack me yo");
+		}
+
+
+		$content->setDeleted(true);
+
+		$em->persist($content);
+		$em->flush();
+
+    $this->get('session')->getFlashBag()->add('success', 'Post skasowany.');
+
+		return $this->redirectToRoute('discuss2', ['name' => $id->getGroups()->getName()]);
+	}
+}

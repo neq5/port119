@@ -1,0 +1,1 @@
+/usr/bin/convert -size 220x179 /var/www/port119/public/coalesce.gif -resize 150x122.04545454545 /var/www/port119/src/../public/gallery/890a9e24-cf02-4eea-98ce-e5739454f950/annoying//cover.jpeg

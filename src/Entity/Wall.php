@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\WallRepository")
+ */
+class Wall
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+
+
+    private $filename;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $accounts;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getAccounts(): ?User
+    {
+        return $this->accounts;
+    }
+
+    public function setAccounts($accounts): self
+    {
+        $this->accounts = $accounts;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+}

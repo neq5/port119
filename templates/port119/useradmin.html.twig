@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Twoje wątki<br /><br />
+
+<table border=1>
+		<tr><td>Awatar</td><td>Nazwa</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
+
+
+{% for group in groups %}
+<tr>
+<td><img src="/groupavatar/{{ group.id }}.jpeg"></td>
+<td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}">{{ group.name }}</a></td>
+
+<td>
+
+{% for key, value in gcdn %}
+	{% if key == group.name %}
+		{% for key1, value1 in value %}
+			{{ key1 }}<br />
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+
+</td>
+
+<td class="text-center">
+{% if group.active != false %}
+akywny
+{% else %}
+zamknięty
+{% endif %}
+
+</td>
+
+<td class="text-center">
+
+{% if group.open != false %}
+otwarty
+{% else %}
+zamknięty
+{% endif %}
+</td>
+
+
+
+
+<td>{{ abouts[group.id] }}</td><td>{{ group.createdat|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('group_user_show', {'id': group.id}) }}">pokaż</a> <a href="{{ path('group_user_edit', {'id': group.id}) }}">edycja</a> <a href="{{ path('group_user_delete', {'id': group.id}) }}">usuń</a></td></tr>
+
+
+
+{% endfor %}
+</table>
+
+{% endblock %}

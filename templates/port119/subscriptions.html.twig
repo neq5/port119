@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if subscriptions %}
+
+Subskrybujesz<br />
+
+<table border=1>
+		<tr><td>Właściciel</td><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
+
+
+
+
+{% set subhash = [] %}
+
+{% for sub in subscriptions %}
+
+
+<tr><td><a href="{{ path('userspace', {'uid': sub.groups.owner.id}) }}">{{ sub.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': sub.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ sub.groups.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': sub.groups.name, 'page': 1}) }}">{{ sub.groups.name }}</a></td>
+<td>
+{{ ccnt[sub.groups.id] }} / {{ last[sub.groups.id] }}
+</td>
+<td>
+	{% for k, v in gcdn %}
+		{% if k == sub.groups.name %}
+			{% for k1, v1 in v %}
+				<a href="{{ path('userspace', {'uid': v1}) }}">{{ k1 }}</a><br />
+				{% set subhash = subhash|merge({(sub.groups.name): 1}) %}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+</td>
+<td>
+{% if sub.groups.active != false %}
+	aktywny
+{% else %}
+	nieakwytwny
+{% endif %}
+</td>
+<td>
+{% if sub.groups.open != false %}
+	otwarty
+{% else %}
+	zamknięty
+{% endif %}
+</td>
+<td>
+{{ abouts[sub.groups.id] }}</td>
+
+<td>{{ sub.groups.createdat|date('Y-m-d H-i-s') }}</td>
+
+<td><a href="{{ path('group_user_unsubscribe', {'groupid': sub.groups.id}) }}">nie subskrybuj</a> <a href="{{ path('group_user_show', {'id': sub.groups.id}) }}">pokaż</a></td>
+
+
+</tr>
+{% endfor %}
+</table>
+
+{% else %}
+Brak wątków
+{% endif %}
+
+
+{% endblock %}

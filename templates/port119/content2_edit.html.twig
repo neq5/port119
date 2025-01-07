@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if avfile is not null  %}
+<img src=/content/img/{{ avfile }}><br />
+{% endif %}
+
+Edytuj wpis
+
+{{ form_start(contentform) }}
+{{ form_widget(contentform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(contentform) }}
+
+<br /><br />
+
+{% endblock %}

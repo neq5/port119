@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% set subhash = [] %}
+
+
+{% for sub in subscriptions %}
+{% for k, v in gcdn %}
+        {% if k == sub.groups.name %}
+                {% for k1, v1 in v %}
+                        {% set subhash = subhash|merge({(sub.groups.name): 1}) %}
+                {% endfor %}
+        {% endif %}
+{% endfor %}
+{% endfor %}
+
+
+
+{% if groups %}
+Twoje wątki<br /><br />
+
+
+<table border=1>
+		<tr><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
+
+
+{% for group in groups %}
+<tr>
+<td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}"><img src="/groupavatar/{{ group.id }}.jpeg"></a></td>
+<td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}">{{ group.name }}</a></td>
+
+<td>
+{{ ccnt[group.id] }} / {{ last[group.id] }}
+</td>
+
+<td>
+
+{% for key, value in gcdn %}
+	{% if key == group.name %}
+		{% for key1, value1 in value %}
+			<a href="{{ path('userspace', {'uid': value1}) }}">{{ key1 }}</a><br />
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+
+</td>
+
+<td class="text-center">
+{% if group.active != false %}
+akywny
+{% else %}
+zamknięty
+{% endif %}
+
+</td>
+
+<td class="text-center">
+
+{% if group.open != false %}
+otwarty
+{% else %}
+zamknięty
+{% endif %}
+</td>
+
+
+
+
+<td>{{ abouts[group.id] }}</td><td>{{ group.createdat|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('group_user_show', {'id': group.id}) }}">pokaż</a> <a href="{{ path('group_user_edit', {'id': group.id}) }}">edycja</a> <a href="{{ path('group_user_delete', {'id': group.id}) }}">usuń</a>
+
+{% if subhash[group.name] is defined %}
+
+<a href="{{ path('group_user_unsubscribe', {'groupid': group.id}) }}">nie subskrybuj</a>
+
+{% else %}
+<a href="{{ path('group_user_subscribe', {'groupid': group.id}) }}">subskrybuj</a>
+{% endif %}
+
+
+</td>
+
+
+</tr>
+
+
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+Brak wątków
+
+{% endif %}
+
+
+{% endblock %}

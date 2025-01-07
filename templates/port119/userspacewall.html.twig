@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Tablica użytkownika {{ uname }} <img src="{{ avatar|raw}}"> Ilość wpisów {{ cnt }} || Ilość komentarzy {{ ccntvar }}
+
+{% if cnt > 0 %}
+<table border=1>
+<tr><td>Tytuł</td><td>Data</td><td>Treść</td><td></td></tr>
+
+{% for k, v in usercontent %}
+<tr><td>{{ tcontent[v.filename] }}</td><td>{{ v.createdat|date('Y-m-d H-i-s') }}</td><td>{{ content[v.filename]|raw }}</td><td><a href="{{ path('userspacewall_comment', {'uid': v.id }) }}">komentarze ({{ ccnt[v.filename] }})</a></td></tr>
+{% endfor %}
+
+</table>
+{% endif %}
+
+{% endblock %}

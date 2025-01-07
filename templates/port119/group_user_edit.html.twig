@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Awatar:
+
+{% if avatar != "brak" %}
+<img src="{{ avatar|raw }}">
+{% endif %}
+
+
+{{ form_start(avatarform) }}
+{{ form_widget(avatarform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(avatarform) }}
+
+Edytuj wątek
+
+{{ form_start(groupform) }}
+{{ form_widget(groupform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(groupform) }}
+
+Admnistratorzy: <br />
+
+{% for k, v in gcdn %}
+	{% for k2, v2 in v %}
+		{% if k2 != groupowner %}
+			{{ k2 }} <a href="{{ path('group_user_admin_delete', {'groupid': group_id, 'userid': k2 }) }}"> usuń</a><br />
+		{% else %}
+			<b>{{ k2 }}</b><br />
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+<br /><br />
+
+<!--
+
+{% set a = adminform.vars.form.accounts.vars.choices|length %}
+
+{% if a > 0 %}
+
+
+{{ form_start(adminform) }}
+{{ form_widget(adminform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(adminform) }}
+
+
+{% endif %}
+
+
+-->
+
+adminform2 dodaj admina (wpisz 3 znaki)
+
+{{ form_start(adminform2) }}
+{{ form_widget(adminform2) }}
+<button type=submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(adminform2) }}
+
+{% endblock %}
+
+{% block javascripts %}
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+                <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+<script>
+
+$("#gcdn_neq_accounts").on("change paste keyup", zmiana);
+
+
+function zmiana() {
+        var tekst = $(this).val();
+
+	const group_id = "{{ group_id }}";
+	const host = "{{ host }}";
+
+
+
+        const len = tekst.length;
+        console.log("len: " + len);
+
+        if(len >= 3)
+        {
+
+
+                $.ajaxSetup({
+                //      headers: {
+                                //"Cookie" : sid,
+                //      }
+                        //withCredentials: true
+                        crossDomain: true,
+                     xhrFields: {
+                        withCredentials: true
+                        },
+
+                });
+
+
+
+                //$.getJSON("https://port119.pl/jq2" + "/" + group_id,
+                $.getJSON(host + "/top/jq2" + "/" + group_id,
+                {
+                        "arg": tekst,
+			//"gid": group_id,
+        //              "headers": { Cookie: "SID=" + sid },
+                }
+                ).done(wynik);
+
+        }
+}
+
+function wynik(wartosc) {
+        //$('#selekt').children().remove();
+
+        $('#gcdn_neq_selekt').children().remove();
+        for (opcja in wartosc) {
+
+                console.log(wartosc[opcja] + " " + opcja);
+                $('#gcdn_neq_selekt').append($('<option>', {
+                    //value:  wartosc[opcja],
+                    //text:   opcja
+                        value: opcja,
+                        text: wartosc[opcja]
+                }));
+        }
+}
+
+</script>
+{% endblock %}
+

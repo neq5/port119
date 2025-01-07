@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8">
+			Wizyty: <a href="{{ path('userspace', {'uid': uid}) }}">na Twoim profilu</a>
+<br />			ostatnie wątki (ilość {{ grcnt }})
+
+
+{% if allgroups %}
+
+<table border=1>
+<tr><td>Właściciel</td><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td></tr>
+
+{% for ag in thread_allgroups %}
+<tr><td><a href="{{ path('userspace', {'uid': ag.owner.id}) }}"> {{ ag.owner }}</td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}"><img src="/groupavatar/{{ ag.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}">{{ ag.name }}</td><td>{{ ccnt[ag.id] }} / {{ last[ag.id] }}</td>
+
+<td>
+{% for k, v in gcdn %}
+	{% if k == ag.name %}
+		{% for k1, v1 in v %}
+			<a href="{{ path('userspace', {'uid': v1}) }}">{{ k1 }}</a><br />
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+</td>
+<td>
+{% if ag.active != false %}
+akrywny
+{% else %}
+nieaktywny
+{% endif %}
+</td>
+<td>
+{% if ag.open != false %}
+otwarty
+{% else %}
+zamknięty 
+{% endif %}
+</td>
+<td>{{ abouts[ag.id] }}</td>
+<td>{{ ag.createdat|date('Y-m-d H-i-s') }}</td>
+</tr>
+
+{% endfor %}
+
+
+</table>
+{{ navi|raw }}
+
+{% endif %}
+	</div>
+	<div class="col-sm-4">
+		ostatnio komentowane
+		<table border=1>
+		<tr><td>Data</td><td>Nazwa grupy</td><td>Autor</td><td>Tytuł</td><td>Treśc</td></tr>
+		{% for k, v in commcreatedat %}
+			<tr><td>{{ commcreatedat[k]|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('discuss2', {'name': commgids[k], 'page': 1}) }}">{{ commgids[k] }}</td><td><a href="{{ path('userspace', {'uid': commaccounts2[k] }) }}">{{ commaccounts[k] }}</a></td><td>{{ commtitles[k] }}</td><td>{{ commcontent[k] }}</td></tr>
+		{% endfor %}
+		</table>
+
+<br /><br />
+najczęściej wyświetlane wątki
+
+<table border=1>
+<tr><td>Grupa</td><td>Licznik</td></tr>
+{% for k, v in ghitsarr %}
+<tr><td><a href="{{ path('discuss2', {'name': k, 'page': 1}) }}">{{ k }}</a><td align=right>{{ v }}</td></tr>
+
+{% endfor %}
+</table>
+<br /><br />
+
+Najczęściej komentowane
+<table border=1>
+<tr><td>Wątek</td><td>Komentarzy</td></tr>
+{% for k, v in cntg %}
+<tr><td><a href="{{ path('discuss2', {'name': k, 'page':1}) }}">{{ k }}</a></td><td>{{ v }}</td></tr>
+{% endfor %}
+</table>
+
+<br /><br />
+
+
+augue eget arcu dictum varius duis at consectetur lorem donec massa sapien faucibus et molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a cras semper auctor neque vitae tempus quam pellentesque nec nam aliquam sem et tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt vitae semper quis lectus nulla at volutpat diam ut venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin fermentum leo vel orci porta non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam non nisi est sit amet facilisis magna etiam tempor orci eu lobortis elementum nibh tellus molestie nunc non blandit massa enim nec dui nunc mattis enim ut tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam 
+	</div>
+	</div>
+	</div>
+</div>
+
+{% endblock %}

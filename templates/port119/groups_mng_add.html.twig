@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Dodaj wątek
+
+{{ form_start(groupform) }}
+{{ form_widget(groupform) }}
+<button type="submit" class="btn btnoutline-secondary">Dodaj wątek</button>
+{{ form_end(groupform) }}
+
+<br /><br />
+
+
+{% endblock %}

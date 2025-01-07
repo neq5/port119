@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% set subhash = [] %}
+
+
+{% for sub in subscriptions %}
+{% for k, v in gcdn %}
+	{% if k == sub.groups.name %}
+		{% for k1, v1 in v %}
+			{% set subhash = subhash|merge({(sub.groups.name): 1}) %}
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+{% endfor %}
+
+
+
+{% if allgroups %}
+Wszystkie wątki<br />
+
+<table border=1>
+		<tr><td>Właściciel</td><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
+{% for ag in allgroups %}
+<tr><td><a href="{{ path('userspace', {'uid': ag.owner.id}) }}"> {{ ag.owner }} </a></td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}"><img src="/groupavatar/{{ ag.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}">{{ ag.name }}</a></td>
+<td>{{ ccnt[ag.id] }} / {{ last[ag.id] }}</td>
+<td>
+{% for k, v in gcdn %}
+	{% if k == ag.name %}
+		{% for k1, v1 in v %}
+			<a href="{{ path('userspace', {'uid': v1}) }}">{{ k1 }}</a> <br />
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+</td>
+
+<td>
+{% if ag.active != false %}
+aktywny
+{% else %}
+nieaktywny
+{% endif %}
+</td>
+<td>
+{% if ag.open != false %}
+otwarty
+{% else %}
+zamknięty
+{% endif %}
+</td>
+<td>{{ abouts[ag.id] }}
+</td>
+<td>
+{{ ag.createdat|date('Y-m-d H-i-s') }}
+</td>
+
+<td>
+
+
+{% if subhash[ag.name] is defined %}
+
+<a href="{{ path('group_user_unsubscribe', {'groupid': ag.id}) }}">nie subskrybuj</a>
+
+{% else %}
+<a href="{{ path('group_user_subscribe', {'groupid': ag.id}) }}">subskrybuj</a>
+{% endif %}
+
+<a href="{{ path('group_user_show', {'id': ag.id })}}">pokaż</a>
+
+
+{% for k, v in gcdn %}
+        {% if k == ag.name %}
+                {% for k1, v1 in v %}
+				{% if k1 == username %}
+					<a href="{{ path('group_user_edit', {'id': ag.id}) }}">edytuj</a>
+					{% if ag.owner == k1 %}
+						<a href="{{ path('group_user_delete', {'id': ag.id}) }}">usuń</a>
+					{% endif %}
+				{% endif %}
+                {% endfor %}
+        {% endif %}
+{% endfor %}
+
+
+</td>
+</tr>
+{% endfor %}
+</table>
+
+{% else %}
+Brak wątków
+{% endif %}
+
+{% endblock %}

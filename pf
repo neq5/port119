@@ -1,0 +1,8 @@
+/etc/opt/rh/rh-php72/sysconfig/php-fpm
+/var/log/php-fpm
+/var/opt/rh/rh-php72/run/php-fpm
+/var/opt/rh/rh-php72/log/php-fpm
+/opt/rh/rh-php72/register.content/etc/opt/rh/rh-php72/sysconfig/php-fpm
+/opt/rh/rh-php72/register.content/var/opt/rh/rh-php72/run/php-fpm
+/opt/rh/rh-php72/register.content/var/opt/rh/rh-php72/log/php-fpm
+/opt/rh/rh-php72/root/usr/sbin/php-fpm

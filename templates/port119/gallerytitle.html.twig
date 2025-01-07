@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Ustaw tytuł obrazka
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn btnoutline-secondary">Ustaw tytuł</button>
+{{ form_end(form) }}
+
+{% endblock %}

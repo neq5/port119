@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Profil użytkownika 
+
+<table border=1>
+<tr>
+<td>{{ uname }}</td>
+<td><img src="{{ avatar }}"></td>
+</tr>
+<tr>
+<td>Imię</td>
+<td>{{ firstname }}</td>
+</tr>
+<tr>
+<td>Nazwisko</td>
+<td>{{ lastname }}</td>
+</tr>
+<tr>
+<td>Opis</td>
+<td>{{ aboutcontent }}</td>
+</tr>
+<tr>
+<td colspan=2>{{ postcnt }} postów w {{ groupcnt }} wątkach</td>
+</tr>
+
+</table>
+<br />
+<table border=1>
+<tr>
+<td>
+{% if freporequested %}
+	wysłano zaproszenie do grona znajomych || <a href="{{ path('cancelfriendrequest', {'id': freporequested[0].id, 'pid': uid}) }}">Anuluj</a>
+{% elseif frepotoconfirm %}
+	zostałeś zaproszony do grona znajomych przez użytkownika {{ uname }}<br />
+	<a href="{{ path('cancelfriendrequest', {'id': frepotoconfirm[0].id, 'pid': uid}) }}">Odrzuć zaproszenie</a><br />
+	<a href="{{ path('confirmfriendrequest', {'fid': frepotoconfirm[0].id, 'uid': userid, 'pid': uid}) }}">Potwierdź zaproszenie</a>
+
+{% else %}
+	{% if frepo %}
+		jesteście znajomymi || <a href="{{ path('removefriendfromuserspace', {'uid': frepo[0].user.id, 'pid': frepo[0].party.id}) }}">Usuń</a> 
+	{% else %}
+		nie jesteście znajomymi || <a href="{{ path('fromuserspaceadd', {'uid': userid, 'pid': uid}) }}">Dodaj</a> 
+	{% endif %}
+{% endif %}
+</td>
+</table>
+<br />
+<table border=1>
+<tr>
+<td>
+	<a href="{{ path('fromuserspacegallery', {'uid': uid }) }}">Galeria</a> {{ indircnt }} obrazków w {{ albumscnt }} albumach {{ vccnt }} komentarzy
+</td>
+</tr><tr>
+<td>
+	<a href="{{ path('fromuserspacewall', {'uid': uid }) }}">Blog</a> {{ wallcnt }} wpisów || {{ ccnt }} komentarzy
+</td>
+</tr>
+</table>
+
+{% endblock %}

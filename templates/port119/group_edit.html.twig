@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Awatar:
+{{ form_start(avatarform) }}
+{{ form_widget(avatarform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(avatarform) }}
+
+
+
+
+Edytuj wątek
+
+
+{{ form_start(groupform) }}
+{{ form_widget(groupform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(groupform) }}
+
+Administratorzy: <br />
+
+{% for k, v in gcdn %}
+	{% for k2, v2 in v %}
+		{% if k2 != groupowner %}
+			{{ k2 }} <a href="{{ path('admin_delete', {'groupid': group_id, 'userid': k2 }) }}"> usuń</a><br />
+		{% else %}
+			<b>{{ k2 }}</b><br />
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+
+<br /><br />
+
+
+{{ form_start(adminform) }}
+{{ form_widget(adminform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(adminform) }}
+
+{% endblock %}

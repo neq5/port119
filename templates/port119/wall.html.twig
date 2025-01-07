@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Tablica użytkownika {{ username }} {% if avatar != "brak" %}<img src="{{ avatar|raw }}"> {% endif %} || Ilość wpisów: {{ cnt }} || Ilość komentarzy: {{ ccntvar }}<br /><br />
+
+
+Nowy wpis.
+
+{{ form_start(form) }}
+{{ form_row(form.title) }}
+{{ form_row(form.content) }}
+{% if subs %}
+	dodaj do wątków <input type=checkbox id="foo">
+	{{ form_widget(form.groups) }}
+{% endif %}
+
+<button type="submit" class="btn btnoutline-secondary">Dodaj</button>
+{{ form_end(form, {'render_rest': false}) }}
+
+<form name="cmd" method="post" action="{{ path('wall_mass_delete', {'uid': uid}) }}">
+<input type="button" value="zaznacz wszystkie" onclick="checkboxesAll('cmd', true);"/>
+<input type="button" value="odznacz wszystkie" onclick="checkboxesAll('cmd',false);"/>
+<button type="submit" class="btn btnoutline-secondary">Usuń</button><br /><br />
+
+{% if cnt > 0 %}
+<table border=1>
+<tr><td>Tytuł</td><td>Data</td><td>Treść</td><td>Akcja</td><td></td></tr>
+{% for k, v in usercontent %}
+
+<tr><td>{{ tcontent[v.filename] }}</td><td>{{ v.createdat|date('Y-m-d H-i-s') }}</td><td>{{ content[v.filename]|raw }}</td><td><a href="{{ path('wall_post_delete', {'id': v.id}) }}">usuń</a> <a href="{{ path('wall_post_edit', {'id': v.id}) }}">edytuj</a> <a href="{{ path('wall_comment', {'id': v.id}) }}">komentarze ({{ ccnt[v.filename] }})</a></td><td><input type="checkbox" name="{{ v.id }}" /></tr>
+
+{% endfor %}
+{% endif %}
+
+</table>
+
+</form>
+
+<script>
+function checkboxesAll(f,b){ 
+   var e = document.forms[f].elements;
+   for (var i=0;i<e.length;i++) {
+      if (e[i].type=="checkbox") e[i].checked = b;
+   }
+}
+</script>
+
+<script>
+function doAlert() {
+    var input = document.querySelector('#foo');
+
+    input.addEventListener('change', function() {
+        if (input.checked) {
+                document.getElementById('wall_groups').disabled = false;
+        } else {
+                document.getElementById('wall_groups').disabled = true;
+        }
+    });
+}
+
+doAlert();
+</script>
+
+
+
+{% endblock %}

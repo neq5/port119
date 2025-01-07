@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equid="expires" content="-1">
+        <title>{% block title %}port119{% endblock %}</title>
+        {% block stylesheets %}
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+		<style type="text/css">
+
+		#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 10%; /* Full width (cover the whole page) */
+  height: 10%; /* Full height (cover the whole page) */
+  top: 3%;
+  left: 50;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+#text{
+  padding: 0 12px;
+  border: 0px solid teal;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 17px;
+  background-color: rgba(0,0,0,0,5);
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  border-style: none;
+  border-color: red;
+}
+
+
+		.link-container {
+			border: 0px solid;
+			width: 50%
+			height: 20px;
+		}
+		.link-container a {
+			display: block;
+			background: #black;
+			height: 100%;
+			text-align: left;
+		}
+		.link-container a:hover {
+			background: #f8f8f8;
+		}
+
+		.lcolor {
+			color: white;
+		}
+
+
+.lewa_p, .prawa_p
+{
+   
+}
+.poszial_prawa
+{
+   float: right;
+   text-align: right;
+}
+#top_s
+{
+   background: black;
+   position: sticky;
+   z-index: 99999;
+   padding-top: 3px;
+   padding-bottom: 3px;
+   color: white;
+   top: 0;
+}
+.cont
+{
+   width: 99%;
+   margin: 0 auto;
+}
+.navbar
+{
+   padding: 0!important;
+}
+.nav-link, .navbar-brand
+{
+   padding-top: 0!important;
+   padding-bottom: 0!important;
+}
+
+.lista li { list-style-type: none; }
+		</style>
+		
+	{% endblock %}
+    </head>
+    <body>
+
+
+<div id="top_s">
+   
+<div class="cont">
+<div class="poszial_top row">
+   
+<div class="lewa_strona_top col-lg-6">
+
+
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand lcolor" href="/">port119</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+	<b>
+	{{ username }}
+	</b>
+        <!-- <a class="nav-link lcolor" href="#">// Andrzej // <span class="sr-only">(current)</span></a> -->
+      </li>
+
+<!--
+      <li class="nav-item">
+        <a class="nav-link" href="/settings">Ustawienia</a>
+      </li>
+-->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle lcolor" href="#" id="Wątki" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Wątki
+        </a>
+        <div class="dropdown-menu" aria-labelledby="Wątki">
+          <a class="dropdown-item" href="{{ path('group_own') }}">Twoje wątki</a>
+          <a class="dropdown-item" href="{{ path('group_admin') }}">Administrujesz</a>
+          <a class="dropdown-item" href="{{ path('group_sub') }}">Subskrybujesz</a>
+          <a class="dropdown-item" href="{{ path('group_all') }}">Wszystkie wątki</a>
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ path('group_add') }}">Dodaj wątek</a>
+        </div>
+      </li>
+	<li class="nav-item">
+       	<a class="nav-link active lcolor" href="{{ path('wall') }}">Blog</a>
+	</li>
+	<li class="nav-item">
+	<a class="nav-link active lcolor" href="{{ path('friends2') }}">Znajomi</a>
+	</li>
+	<li class="nav-item">
+	<a  class="nav-link active lcolor" href="{{ path('user_gallery') }}">Galeria</a>
+	</li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+
+  
+</div>
+<div class="prawa_strona_top col-lg-6">
+   
+
+<div class="poszial_prawa row">
+
+<nav class="navbar navbar-expand-lg">
+
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle lcolor" href="#" id="Ustawienia" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Ustawienia
+        </a>
+        <div class="dropdown-menu" aria-labelledby="Ustawienia">
+           <a class="dropdown-item" href="{{ path('user_password') }}">Hasło</a>
+          <a class="dropdown-item" href="{{ path('user_avatar') }}">Awatar</a>
+          <a class="dropdown-item" href="{{ path('user_profile') }}">Profil</a>
+	  <a class="dropdown-item" href="{{ path('user_delete') }}">Skasuj konto</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active lcolor" href="{{ path('fos_user_security_logout') }}">logout</a>
+    </ul>
+  </div>
+</nav>
+
+
+</div>
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+{% for type, flashes in app.flashes() %}
+        {% for flash in flashes %}
+<div id="overlay" onclick="hide_overlay();">
+  <div id="text">{{ flash }}</div>
+</div>
+
+        {% endfor %}
+{% endfor %}
+
+
+
+
+        {% block body %}
+	{% endblock %}
+
+	{% block javascripts %}
+<script>
+var milisekundy = 30 * 1000;
+function dokument_wczytany() {
+    setTimeout(hide_overlay, milisekundy);
+}
+function hide_overlay() {
+    document.getElementById("overlay").style.display = "none";
+}
+document.onload = dokument_wczytany();
+</script>
+
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+	{% endblock %}
+
+
+	</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Profil
+
+{{ form_start(settingsform) }}
+{{ form_widget(settingsform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz dane</button>
+{{ form_end(settingsform) }}
+
+{% endblock %}

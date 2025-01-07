@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Wątek "{{ groupname }}" | Ilość wpisów: {{ cnt }} | <a href="{{ path('discuss_new', {'id': groupid}) }}">Nowy wpis</a>
+<br /><br />
+
+
+{% for k, v in cid %}
+<table border=1 width=90%>
+<tr><td>Data</td><td>Id wpisu</td><td>Nazwa wątku</td><td>Referencja</td><td>Autor</td><td>Akcja</td><td>Temat</td><td width=40%>Treść</td></tr>
+<tr><td>{{ v.createdat|date('Y-m-d H-i-s') }}<td>{{ v.id }} </td><td>{{ v.groups.name }}</td><td>{{ v.refs }}</td><td>{{ v.accounts.username }}</td><td>{% if username == v.accounts.username %} <a href="{{ path('discuss_edit', {'id': v.id, 'page': 1}) }}">edytuj</a>{% endif %}  <a href="{{ path('discuss_reply', {'cid': v.id, 'gid': groupid, 'page': 1}) }}">odpowiedz</a></td><td>{{ v.subject }}</td><td>{{ cnts[v.id] }}</td></tr>
+</table>
+<br /><br /><br />
+{% endfor %}
+
+
+<tr>
+
+
+
+
+{% endblock %}

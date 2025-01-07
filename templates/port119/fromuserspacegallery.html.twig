@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+galeria użytkownika {{ uname }}<br />
+
+{% if albumscnt == 0 %}
+brak albumów<br />
+{% endif %}
+
+{{ accnt }} komentarzy<br />
+{{ apicscnt }} obrazków<br />
+
+{% if albumscnt %}
+
+Ilość albumów: {{ albumscnt }}<br /><br />
+
+
+{% for k, v in albums %}
+<a href="{{ path('userspacegallerycontent', {'uid': userid, 'gid': v}) }}">
+<img src="/gallery/{{ userid}}/{{ v }}/cover.jpeg"></a> ilość zdjęć {{ picsnt[v] }} komentarzy: {{ vaccnt[v] }} nazwa: {{ v }}<br />
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+komentarze: {{ ucnt }}
+
+{% if ucnt > 0 %}
+
+<table border=1>
+<tr><td>Data</td><td>Autor</td><td>Treść komentarza</td><td>Akcja</td></tr>
+
+{% for k, v in content %}
+
+
+<tr><td>{{ v.createdat|date('Y-m-d H-i-s') }}</td><td><img src="/avatar/{{ v.uid.id }}.jpeg"> {{ v.uid }}</td><td>{{ cnt[v.filename]|raw }}</td><td><a href="{{ path('wall_comment_delete', {'cid': v.id, 'wid': v.wid.id}) }}">usuń</a> {% if editmark[v.uid.id] is defined %}<a href="{{ path('wall_comment_edit', {'cid': v.id, 'wid': v.wid.id}) }}">edytuj</a>{% endif %}</td></tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+
+Dodaj komentarz
+
+{{ form_start(cform) }}
+{{ form_widget(cform) }}
+<button type="submit" class="btn btnoutline-secondary">Dodaj</button>
+{{ form_end(cform) }}
+
+{% endblock %}

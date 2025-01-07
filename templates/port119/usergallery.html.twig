@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if albumscnt == 0 %}
+0 albumów 
+{% elseif albumscnt == 1 %}
+1 album 
+{% else %}
+{{ albumscnt }} albumy 
+{% endif %}
+
+ obrazków: {{ allpicscnt }} komentarzy {{ ccnt }}
+
+<br /><br />
+Dodaj album<br>
+{{ form_start(albumsform) }}
+{{ form_widget(albumsform) }}
+<button type="submit" class="btn bntouline-secondary">Dodaj</button>
+{{ form_end(albumsform) }}
+
+
+<br /><br />
+
+
+{% if albumscnt %}
+
+
+<form name="amd" method="post" action="{{ path('user_gallery_album_mass_delete', {'uid': uid}) }}">
+<input type="button" value="zaznacz wszystkie" onclick="checkboxesAll('amd',true);"/>
+<input type="button" value="odznacz wszystkie" onclick="checkboxesAll('amd',false);"/><br /><br />
+
+<button type="submit" class="btn btnoutline-secondary">Usuń</button><br /><br />
+
+
+{% for k, v in albums %}
+
+<a href="{{ path('user_gallery_content', {'uid': userid, 'gid': v}) }}">
+
+<img src="/gallery/{{ userid }}/{{ v }}/cover.jpeg">
+</a> 
+
+
+ilość zdjęć: 
+{{ picscnt[v] }} 
+| ilość komentarzy: {{ albccnt[v] }} 
+| {{ v }} 
+| <a href="{{ path('user_gallery_delete', {'uid': userid, 'gid': v}) }}">usuń</a> 
+
+<input type="checkbox" name="{{ fnames[v] }}" /><br /><br />
+{% endfor %}
+
+</form>
+
+
+<script>
+function checkboxesAll(f,b){ 
+   var e = document.forms[f].elements;
+   for (var i=0;i<e.length;i++) {
+      if (e[i].type=="checkbox") e[i].checked = b;
+   }
+}
+</script>
+
+
+
+{% endif %}
+{% endblock %}

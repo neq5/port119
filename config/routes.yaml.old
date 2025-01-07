@@ -1,0 +1,74 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+hello_world:
+        path: /
+        controller: App\Controller\HelloWorldController::hello
+
+user_settings:
+        path: /settings
+        controller: App\Controller\UserSettingsController::index
+
+groups_mng:
+       path: /groups_mng
+       controller: App\Controller\GroupAdminController::index
+
+group_edit:
+       path: /groups_mng/edit/{id}
+
+       controller: App\Controller\GroupAdminController::edit
+group_delete:
+       path: /groups_mng/delete/{id}
+       controller: App\Controller\GroupAdminController::delete
+
+group_show:
+       path: /groups_mng/show/{id}
+       controller: App\Controller\GroupAdminController::show
+
+group_user:
+       path: /groups_user
+       controller: App\Controller\GroupUserController::index
+
+group_user_show:
+       path: /groups_user/show/{id}
+       controller: App\Controller\GroupUserController::show
+
+group_user_edit:
+       path: /groups_user/edit/{id}
+       controller: App\Controller\GroupUserController::edit
+
+group_user_admin_delete:
+       path: /group_user/admin_delete/{groupid}/{userid}
+       controller: App\Controller\GroupUserController::admindelete
+
+group_user_delete:
+       path: /group_user/group_delete/{id}
+       controller: App\Controller\GroupUserController::delete
+
+group_user_subscribe:
+       path: /group_user/group_subscribe/{groupid}
+       controller: App\Controller\GroupUserController::subscribe
+
+group_user_unsubscribe:
+       path: /group_user/group_unsubscribe/{groupid}
+       controller: App\Controller\GroupUserController::unsubscribe
+
+admin_delete:
+       path: /groups_mng/admin_delete/{groupid}/{userid}
+       controller: App\Controller\GroupAdminController::admindelete
+discuss:
+       path: /d/{name}
+       controller: App\Controller\GroupContentController::index
+discuss_new:
+       path: /d/{id}/new
+       controller: App\Controller\GroupContentController::new
+
+
+gallery:
+        path: /gallery
+        controller: App\Controller\GalleryController::index
+
+gallery2:
+        path: /gallery2
+        controller: App\Controller\Gallery2Controller::index

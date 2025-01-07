@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Friends
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+
+
+
+
+
+
+<button type="submit" class="btn btnoutline-secondary">Dodaj</button>
+{{ form_end(form) }}
+
+
+Lista znajomych:
+<br />
+
+<table border=1>
+<tr><td>User</td><td>Imię</td><td>Nazwisko</td><td>Akcja</td></tr>
+{% for k, v in frepo %}
+<tr>
+	<td><a href="{{ path('userspace', {'uid': frepo[k].user.id}) }}">{% if av[k] != "BRAK" %} <img src="{{ av[k] }}">{% endif %}{{ frepo[k].user.username }}</a></td>
+	<td>{{ frepo[k].user.firstname }}</td>
+	<td>{{ frepo[k].user.lastname }}</td>
+	<td><a href="{{ path('removefriend2', {'uid': frepo[k].user.id, 'pid': frepo[k].party.id}) }}">Usuń</a></td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+<br />
+<br />
+<br />
+Zostałeś zaproszony przez:
+<br />
+
+
+<br />
+
+<table border=1>
+<tr><td>User</td><td>Imię</td><td>Nazwisko</td><td>Akcja</td></tr>
+{% for k, v in frepotoconfirm %}
+<tr>
+	<td><a href="{{ path('userspace', {'uid': frepotoconfirm[k].user.id}) }}">{% if cav[k] != "BRAK" %} <img src="{{ cav[k] }}">{% endif %}{{ frepotoconfirm[k].user.username }}</a></td>
+	<td>{{ frepotoconfirm[k].user.firstname }}</td>
+	<td>{{ frepotoconfirm[k].user.lastname }}</td>
+	<td><a href="{{ path('confirm2', {'fid': frepotoconfirm[k].id, 'uid': frepotoconfirm[k].user.id, 'pid': frepotoconfirm[k].party.id}) }}">potwierdź</a> <a href="{{ path('cancel2', {'fid': frepotoconfirm[k].id}) }}">anuluj</a> </td>
+</tr>
+{% endfor %}
+
+</table>
+
+----
+<br />
+
+Wysłałeś zaproszenie do:
+<br />
+
+<table border=1>
+<tr><td>User</td><td>Imię</td><td>Nazwisko</td><td>Akcja</td></tr>
+
+{% for k, v in freporequested %}
+<tr>
+	<td><a href="{{ path('userspace', {'uid': freporequested[k].party.id}) }}">{% if rav[k] != "BRAK" %} <img src="{{ rav[k] }}">{% endif %}{{ freporequested[k].party.username }}</a></td>
+	<td>{{ freporequested[k].party.firstname }}</td>
+	<td>{{ freporequested[k].party.lastname }}</td>
+	<td><a href="{{ path('cancel2', {'fid': freporequested[k].id}) }}">anuluj</a> </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
+
+
+{% block javascripts %}
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+<script>
+
+$("#friends2_accounts").on("change paste keyup", zmiana);
+
+
+function zmiana() {
+        var tekst = $(this).val();
+
+
+        const sid = 'ldmduhlbjhic3frqjqktm1uc3i';
+
+//      const sid = '9555i9e0s6qsg331mjdmq8kkhi';
+//      const sid = '5127bf16ac39446eb523f8e762f9bcdf';
+
+
+	const host  = "{{ host }}";
+
+        const len = tekst.length;
+        console.log("len: " + len);
+
+        if(len >= 3) 
+        {
+
+
+                $.ajaxSetup({
+                //      headers: {
+                                //"Cookie" : sid,
+                //      }
+                        //withCredentials: true
+                        crossDomain: true,
+                     xhrFields: {
+                        withCredentials: true
+                        },
+
+                });
+
+
+                //$.getJSON("https://port119.pl/jq",
+                $.getJSON(host + "/top/jq",
+                {
+                        "arg": tekst,
+        //              "headers": { Cookie: "SID=" + sid },
+                }
+                ).done(wynik);
+        }
+}
+
+function wynik(wartosc) {
+        //$('#selekt').children().remove();
+        $('#friends2_selekt').children().remove();
+        for (opcja in wartosc) {
+                console.log(wartosc[opcja] + " " + opcja);
+                $('#friends2_selekt').append($('<option>', {
+                    //value:  wartosc[opcja],
+                    //text:   opcja
+                        value: opcja,
+                        text: wartosc[opcja]
+                }));
+        }
+}
+
+</script>
+{% endblock %}

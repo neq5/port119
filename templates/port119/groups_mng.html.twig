@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Dodaj wątek
+
+{{ form_start(groupform) }}
+{{ form_widget(groupform) }}
+<button type="submit" class="btn btnoutline-secondary">Dodaj wątek</button>
+{{ form_end(groupform) }}
+
+<br /><br />
+
+Lista wątków ({{ groupscnt }})
+
+<br /><br />
+
+<table border=1>
+	<tr>
+		<td>Właściciel</td><td>Nazwa</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
+
+{% for group in groups %}
+
+<tr><td>{{ group.owner }}</td><td>{{ group.name }}</td>
+
+<td>
+
+{% for key, value in gcdn %}
+	{% if key == group.name %}
+		{% for key1, value1 in value %}
+			{{ key1 }}<br />
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+
+</td>
+
+<td class="text-center">
+
+{% if group.active != false %}
+	aktywny
+{% else %}
+	nieaktywny
+{% endif %}
+
+</td>
+
+
+<td class="text-center">
+
+{% if group.open != false %}
+	otwarty
+{% else %}
+	zamknięty
+{% endif %}
+
+</td><td>{{ abouts[group.id] }}</td><td>{{ group.createdat|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('group_show', {'id': group.id}) }}">pokaż</a> <a href="{{ path('group_edit', {'id': group.id}) }}">edycja</a> <a href="{{ path('group_delete', {'id': group.id}) }}">usuń</a></td></tr>
+
+{% endfor %}
+
+</table>
+
+<br /><br />
+
+
+{% endblock %}

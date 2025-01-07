@@ -1,0 +1,69 @@
+u% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+{% if admin %}
+
+- administrujesz 
+<br />
+
+<table border=1>
+		<tr><td>Właściciel</td><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
+
+{% for adm in admin %}
+  {% if adm.accounts == username %}
+	<tr><td><a href="{{ path('userspace', {'uid': adm.groups.owner.id}) }}">{{ adm.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ adm.groups.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}">{{ adm.groups.name }}</a></td>
+<td>
+{{ ccnt[adm.groups.id] }} / {{ last[adm.groups.id] }}
+</td>
+
+<td>
+
+
+	{% for k, v in gcdn %}
+		{% if k == adm.groups.name %}
+			{% for k1, v1 in v %}
+				<a href="{{ path('userspace', {'uid': v1}) }}">{{ k1 }}</a><br />
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+
+</td>
+
+<td>
+
+{% if adm.groups.active != false %}
+	aktywny
+{% else %}
+	nieaktywny
+{% endif %}
+</td><td>
+
+{% if adm.groups.open != false %}
+	otwarty
+{% else %}
+	zamknięty
+{% endif %}
+</td>
+<td>{{ abouts[adm.groups.id] }}</td>
+
+<td>{{ adm.groups.createdat|date('Y-m-d H-i-s') }}</td>
+
+
+<td>
+<a href="{{ path('group_user_show', {'id': adm.groups.id}) }}">pokaż</a> <a href="{{ path('group_user_edit', {'id': adm.groups.id, 'page': 1}) }}">edycja</a>
+</td>
+</tr>
+
+{% endif %}
+{% endfor %}
+
+
+</table>
+
+{% else %}
+Brak wątków
+{% endif %}
+
+{% endblock %}

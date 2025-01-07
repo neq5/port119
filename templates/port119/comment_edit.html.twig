@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Edytuj wpis
+
+{{ form_start(editform) }}
+{{ form_widget(editform) }}
+<button type="submit" class="btn btnoutline-secondary">Zapisz</button>
+{{ form_end(editform) }}
+
+{% endblock %}

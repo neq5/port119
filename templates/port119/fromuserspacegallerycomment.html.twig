@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<table border=1>
+<tr><td>Data</td><td>Autor</td><td>Treść komentarza</td><td>Akcja</td></tr>
+
+{% for k, v in content %}
+
+<tr><td>{{ v.createdat|date('Y-m-d H-i-s') }}</td><td><img src="/avatar/{{ v.uid.id}}.jpeg"> {{ v.uid }}</td><td>{{ gcnt[v.filename]|raw }}</td><td>{% if editmark[v.uid.id] is defined %} <a href="{{ path('fromuserspacegallerycomment_edit', {'gcid': v.id, 'imgid': imgid}) }}">edytuj</a> <a href="{{ path('fromuserspacegallerycomment_delete', {'imgid': imgid,'fname': v.filename}) }}">usuń</a>{% endif %}</a></td></tr>
+
+{% endfor %}
+
+</table>
+
+<br />
+<br />
+<br />
+<br />
+
+Dodaj komentarz
+
+{{ form_start(gcform) }}
+{{ form_widget(gcform) }}
+<button type="submit" class="btn btnoutline-secondary">Dodaj</button>
+{{ form_end(gcform) }}
+
+{% endblock %}

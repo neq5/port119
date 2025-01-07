@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+Galeria
+
+{{ form_start(imgform) }}
+{{ form_widget(imgform) }}
+<button type="submit" class="btn btnoutline-secondary">Wrzuć obrazek</button>
+{{ form_end(imgform) }}
+
+{% endblock %}

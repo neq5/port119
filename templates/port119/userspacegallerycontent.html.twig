@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+Album: {{ gid }}<br />
+{% if picscnt == 0 %}
+brak obrazków
+{% else %}
+zawiera {{ picscnt }} obrazki
+<br />
+{{ accnt }} komentarzy
+
+<br />
+{% for k, v in pics %}
+
+<a href="/gallery/{{ uid }}/{{ gid }}/orig/{{ v }}">
+<img src="/gallery/{{ uid }}/{{ gid }}/min/{{ v }}">
+</a> 
+{% if titles2[v] is defined %}
+{{ titles2[v] }} {% else %}brak tytułu {% endif %}
+|| <a href={{ path('fromuserspacegallerycomment', {'uid': userid, 'imgid': v})}}>({{ ccnt[k] }}) komentarze</a>
+
+<br />
+
+{% endfor %}
+{% endif %}
+{% endblock %}

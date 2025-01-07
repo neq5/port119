@@ -1,0 +1,381 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+#root_hello:
+#        path: /{page}
+#        controller: App\Controller\RootHelloController::index
+#        defaults:
+#                  page: 1
+  
+
+show_discuss:
+        path: /show_d/{name}/{page}
+        controller: App\Controller\ShowDiscussController::index
+
+hello_world:
+        path: /top/cnt/{page}
+        controller: App\Controller\HelloWorldController::hello
+        defaults:
+              page: 1
+
+user_settings:
+        path: /top/settings
+        controller: App\Controller\UserSettingsController::index
+
+groups_mng:
+       path: /top/groups_mng
+       controller: App\Controller\GroupAdminController::index
+
+group_edit:
+       path: /top/groups_mng/edit/{id}
+
+       controller: App\Controller\GroupAdminController::edit
+group_delete:
+       path: /top/groups_mng/delete/{id}
+       controller: App\Controller\GroupAdminController::delete
+
+group_show:
+       path: /top/groups_mng/show/{id}
+       controller: App\Controller\GroupAdminController::show
+
+group_user:
+       path: /top/groups_user
+       controller: App\Controller\GroupUserController::index
+
+group_user_show:
+       path: /top/groups_user/show/{id}
+       controller: App\Controller\GroupUserController::show
+
+group_user_edit:
+       path: /top/groups_user/edit/{id}
+       controller: App\Controller\GroupUserController::edit
+
+group_user_admin_delete:
+       path: /top/group_user/admin_delete/{groupid}/{userid}
+       controller: App\Controller\GroupUserController::admindelete
+
+group_user_delete:
+       path: /top/group_user/group_delete/{id}
+       controller: App\Controller\GroupUserController::delete
+
+group_user_subscribe:
+       path: /top/group_user/group_subscribe/{groupid}
+       controller: App\Controller\GroupUserController::subscribe
+
+group_user_unsubscribe:
+       path: /top/group_user/group_unsubscribe/{groupid}
+       controller: App\Controller\GroupUserController::unsubscribe
+
+admin_delete:
+       path: /top/groups_mng/admin_delete/{groupid}/{userid}
+       controller: App\Controller\GroupAdminController::admindelete
+discuss:
+       path: /top/d/{name}
+       controller: App\Controller\GroupContentController::index
+discuss_new:
+       path: /top/d/{id}/new/
+       controller: App\Controller\GroupContentController::new
+discuss_edit:
+       path: /top/d/{id}/edit
+       controller: App\Controller\GroupContentController::edit
+discuss_reply:
+       path: /top/d/{cid}/{gid}/reply
+       controller: App\Controller\GroupContentController::reply
+
+discuss2:
+        path: /top/d2/{name}/{page}
+        #path: /d2/{name}
+        #path: /de2/{name}/{page}/{items}
+        controller: App\Controller\GroupContent2Controller::index
+discuss2_new:
+        path: /top/d2/{id}/{page}/new
+        controller: App\Controller\GroupContent2Controller::new
+
+discuss2_edit:
+        path: /top/d2/{id}/{page}/edit
+        controller: App\Controller\GroupContent2Controller::edit
+discuss2_reply:
+        path: /top/d2/{cid}/{page}/{gid}/reply
+        controller: App\Controller\GroupContent2Controller::reply
+
+discuss2_delete:
+        path: /top/d2/{id}/{page}/delete
+        controller: App\Controller\GroupContent2Controller::delete
+
+gallery:
+        path: /top/gallery
+        controller: App\Controller\GalleryController::index
+
+gallery2:
+        path: /top/gallery2
+        controller: App\Controller\Gallery2Controller::index
+
+### od nowa
+#
+
+user_delete:
+       path: /top/userdel
+       controller: App\Controller\UserDeleteController::index
+
+user_delete_confirm:
+       path: /top/userdel_confirm/{uid}
+       controller: App\Controller\UserDeleteController::confirm
+
+user_password:
+       path: /top/userpassword
+       controller: App\Controller\UserPasswordController::index
+
+user_avatar:
+       path: /top/useravatar
+       controller: App\Controller\UserAvatarController::index
+
+user_gallery:
+       path: /top/usergallery
+       controller: App\Controller\UserGalleryController::index
+
+user_gallery_add:
+       path: /top/usergalleryadd
+       controller: App\Controller\UserGalleryController::add
+
+user_gallery_content:
+       path: /top/gallerycontent/{uid}/{gid}
+       controller: App\Controller\UserGalleryController::content
+
+user_gallery_content_upload:
+       path: /top/gallerycontentupload/{uid}/{gid}
+       controller: App\Controller\UserGalleryController::contentupload
+
+user_gallery_content_delete:
+       path: /top/gallerycontentdel/{uid}/{gid}/{file}
+       controller: App\Controller\UserGalleryController::contentdelete
+
+user_gallery_content_mass_delete:
+       path: /top/gallerycontentmassdel/{uid}/{gid}
+       controller: App\Controller\UserGalleryController::contentmassdelete
+
+user_gallery_album_mass_delete:
+       path: /top/galleryalbummassdelete/{uid}
+       controller: App\Controller\UserGalleryController::albummassdelete
+
+user_gallery_content_failure:
+       path: /top/gallerycontentfailure/{unknown}
+       controller: App\Controller\UserGalleryController::contentfailure
+
+user_gallery_delete:
+       path: /top/gallerydelete/{uid}/{gid}
+       controller: App\Controller\UserGalleryController::gallerydelete
+
+
+user_gallery_title_set:
+      path: /top/gallerydescset/{uid}/{gid}/{file}
+      controller: App\Controller\UserGalleryController::gallerytitleset
+
+user_gallery_comment_edit:
+      path: /top/gallerycomment/edit/{gcid}/{imgid}
+      controller: App\Controller\UserGalleryController::comment_edit
+
+user_gallery_comment:
+      path: /top/gallerycomment/{uid}/{imgid}
+      controller: App\Controller\UserGalleryController::comment
+
+user_gallery_comment_delete:
+      path: /top/gallerycomment/delete/{uid}/{imgid}/{fname}/
+      controller: App\Controller\UserGalleryController::comment_delete
+
+user_gallery_setavatar:
+      path: /top/gallerysetavatar/{uid}/{gid}/{id}/
+      controller: App\Controller\UserGalleryController::setavatar
+
+user_profile:
+      path: /top/userprofile
+      controller: App\Controller\UserProfileController::index
+
+group_add:
+      path: /top/group_add
+      controller: App\Controller\GroupUserAdd::index
+
+group_own:
+      path: /top/group_own
+      controller: App\Controller\GroupUserOwn::index
+
+group_admin:
+      path: /top/group_admin
+      controller: App\Controller\GroupUserAdmin::index
+
+group_sub:
+      path: /top/group_sub
+      controller: App\Controller\GroupSubscriptionsAdmin::index
+group_all:
+      path: /top/group_all
+      controller: App\Controller\GroupAllAdmin::index
+
+#tablica
+wall:
+      path: /top/wall
+      controller: App\Controller\WallController::index
+
+wall_post_delete:
+      path: /top/wall/delete/{id}
+      controller: App\Controller\WallController::post_delete
+
+wall_post_edit:
+      path: /top/wall/edit/{id}
+      controller: App\Controller\WallController::edit
+
+wall_mass_delete:
+      path: /top/wall/cmd/{uid}
+      controller: App\Controller\WallController::mass_delete
+
+wall_comment:
+      path: /top/wall/comment/{id}
+      controller: App\Controller\WallController::comment
+
+wall_comment_delete:
+      path: /top/wall/comment/delete/{cid}/{wid}
+      controller: App\Controller\WallController::comment_delete
+
+wall_comment_edit:
+      path: /top/wall/comment/edit/{cid}/{wid}
+      controller: App\Controller\WallController::comment_edit
+
+
+
+friends:
+      path: /top/friends
+      controller: App\Controller\FriendsController::index
+
+confirm:
+      path: /top/friends/confirm/{fid}/{uid}/{pid}
+      controller: App\Controller\FriendsController::confirm
+
+cancel:
+      path: /top/friends/cancel/{fid}
+      controller: App\Controller\FriendsController::cancel
+
+removefriend:
+      path: /top/friends/remove/{uid}/{pid}
+      controller: App\Controller\FriendsController::remove
+
+
+####### dla testów
+
+jq:
+      path: /top/jq
+      controller: App\Controller\JQDemoController::index
+
+jq2:
+      path: /top/jq2/{gid}
+      controller: App\Controller\JQDemoController2::index
+
+anim:
+      path: /top/anim
+      controller: App\Controller\AnimGifController::index
+
+friends2:
+      path: /top/friends2
+      controller: App\Controller\Friends2Controller::index
+
+confirm2:
+      path: /top/friends2/confirm/{fid}/{uid}/{pid}
+      controller: App\Controller\Friends2Controller::confirm
+
+cancel2:
+      path: /top/friends2/cancel/{fid}
+      controller: App\Controller\Friends2Controller::cancel
+
+removefriend2:
+      path: /top/friends2/remove/{uid}/{pid}
+      controller: App\Controller\Friends2Controller::remove
+
+removefriendfromuserspace:
+      path: /top/userspace/remove/{uid}/{pid}
+      controller: App\Controller\UserSpaceController::remove
+
+fromuserspaceadd:
+      path: /top/userspace/add/{uid}/{pid}
+      controller: App\Controller\UserSpaceController::add
+
+cancelfriendrequest:
+      path: /top/userspace/cancel/{id}/{pid}
+      controller: App\Controller\UserSpaceController::cancel
+
+confirmfriendrequest:
+      path: /top/userspace/confirm/{fid}/{uid}/{pid}
+      controller: App\Controller\UserSpaceController::confirm
+
+userspacegallerycontent:
+      path: /top/userspace/gallery/{uid}/{gid}
+      controller: App\Controller\UserSpaceController::userspacegallerycontent
+
+fromuserspacewall:
+      path: /top/userspace/wall/{uid}
+      controller: App\Controller\UserSpaceController::fromuserspacewall
+
+userspace:
+      path: /top/userspace/{uid}
+      controller: App\Controller\UserSpaceController::index
+
+fromuserspacegallery:
+      path: /top/userspace/gallery/{uid}
+      controller: App\Controller\UserSpaceController::fromuserspacegallery
+
+fromuserspacegallerycomment:
+      path: /top/userspace/gallerycomment/{uid}/{imgid}
+      controller: App\Controller\UserSpaceController::fromuserspacegallerycomment
+
+fromuserspacegallerycomment_delete:
+      path: /top/userspace/gallerycomment/delete/{imgid}/{fname}/
+      controller: App\Controller\UserSpaceController::fromuserspacegallerycomment_delete
+
+fromuserspacegallerycomment_edit:
+      path: /top/userspace/gallerycomment/edit/{gcid}/{imgid}
+      controller: App\Controller\UserSpaceController::fromuserspacegallerycomment_edit
+
+userspacewalledit:
+      path: /top/userspace/wall/edit/{uid}
+      controller: App\Controller\UserSpaceController::userspacewalledit
+
+userspacewall_comment:
+      path: /top/userspace/wall/comment/{uid}
+      controller: App\Controller\UserSpaceController::userspacewall_comment
+
+userspacecomment_delete:
+      path: /top/userspace/wall/comment_delete/{cid}/{wid}
+      controller: App\Controller\UserSpaceController::userspacecomment_delete
+
+userspacecomment_edit:
+      path: /top/userspace/wall/comment_edit/{cid}/{wid}
+      controller: App\Controller\UserSpaceController::userspacecomment_edit
+
+whits:
+      path: /top/wcnt/{uid}
+      controller: App\Controller\UserSpaceController::whits
+
+hwi_oauth_redirect:
+        resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+        prefix: /connect
+
+hwi_oauth_connect:
+        resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+        prefix: /connect
+
+hwi_oauth_login:
+        resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+        prefix: /login
+
+facebook_login:
+        path: /connect/check-facebook
+
+googleplus_login:
+        path: /connect/check-facebook
+
+
+#######
+
+root_hello:
+        path: /{page}
+        controller: App\Controller\RootHelloController::index
+        defaults:
+                  page: 1
+
