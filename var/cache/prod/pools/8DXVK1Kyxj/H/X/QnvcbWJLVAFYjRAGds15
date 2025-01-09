@@ -1,0 +1,3 @@
+0
+%255BApp%255CEntity%255CContent2%255C%2524GEDMO_TREE_CLASSMETADATA%255D%255B1%255D
+a:10:{s:8:"strategy";s:6:"nested";s:16:"activate_locking";b:0;s:15:"locking_timeout";i:3;s:4:"left";s:3:"lft";s:5:"level";s:3:"lvl";s:5:"right";s:3:"rgt";s:20:"rootIdentifierMethod";N;s:4:"root";s:4:"root";s:6:"parent";s:6:"parent";s:14:"useObjectClass";s:19:"App\Entity\Content2";}
