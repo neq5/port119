@@ -147,11 +147,16 @@ public function neq() { return "neq"; }
 	
 		$navi = "";
 
-		$hurl = "https://port119.pl";
+		#$hurl = "http://port119.tld";
+		$hurl = $this->getParameter('host');
 
 		for($i=1;$i<=$navipages;$i++)
 		{
-			if($i == $page)
+			if($navipages == 1)
+			{
+				$navi = "";
+			}
+			elseif($i == $page)
 			{
 				$navi .= "| $i";
 			}

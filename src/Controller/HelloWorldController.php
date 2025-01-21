@@ -54,11 +54,17 @@ class HelloWorldController extends Controller
 
 		$navi = "";
 
-		$hurl = "http://port119.pl/top/cnt";
+		#$hurl = "http://port119.pl/top/cnt";
+
+		$hurl = $this->getParameter('host') . "/top/cnt";
 
 		for($i=1;$i<=$navipages;$i++)
 		{
-			if($i == $page)
+			if($navipages == 1) 
+			{ 
+				$navi = "";
+			}
+			elseif($i == $page)
 			{
 				$navi .= "| $i";
 			} else
