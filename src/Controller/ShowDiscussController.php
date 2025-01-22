@@ -405,15 +405,21 @@ class ShowDiscussController extends Controller
 
 		$forpagi = preg_replace("/ /", "%20", $gid);
 
-		$hurl = "https://port119.pl/show_d/$forpagi";
+		#$hurl = "https://port119.pl/show_d/$forpagi";
+                $hurl = $this->getParameter('host') . "/show_d/$forpagi";
+
 		#echo $forpagi; die;
 
 
                 for($i=1; $i<=$navipages;$i++)
                 {
-                        if($i == $page)
+                        if($navipages == 1)
                         {
-                                $navi .= "| $i";
+                                $navi = "";
+                        }
+                        elseif($i == $page)
+                        {
+                                $navi .= "| $i ";
                         } else
                         {
                                 $navi .= "| <a href=$hurl/$i>$i</a>";
@@ -423,7 +429,7 @@ class ShowDiscussController extends Controller
 		if($page != $navipages)
 		{
 			$follow = $page+1;
-			$navi .= "|| <a href=$hurl/$follow>następna</a>";
+			$navi .= " || <a href=$hurl/$follow>następna</a>";
 		}
 
 

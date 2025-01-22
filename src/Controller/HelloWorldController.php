@@ -73,6 +73,11 @@ class HelloWorldController extends Controller
 			}
 		}
 
+		if($page != $navipages)
+		{
+			$follow = $page+1;
+			$navi .= " || <a href=$hurl/$follow>następna</a>";
+		}
 
 		$ccnt = array();
 		$last = array();

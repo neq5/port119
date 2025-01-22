@@ -166,7 +166,11 @@ public function neq() { return "neq"; }
 			}
 		}
 
-
+		if($page != $navipages)
+		{
+			$follow = $page+1;
+			$navi .= " || <a href=$hurl/$follow>następna</a>";
+		}
 
 			$lastcr = array();
 			$lastcrluty=array();
