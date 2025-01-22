@@ -429,8 +429,8 @@ class GroupContent2Controller extends Controller
 	{
 					if($navipages != 0)
 					{
-				$follow = $page+1;
-				$navi .= " || <a href=$hurl/$follow>następna</a>";
+						$follow = $page+1;
+						$navi .= " || <a href=$hurl/$follow>następna</a>";
 					}
 	}
 
