@@ -261,6 +261,7 @@ class GroupContent2Controller extends Controller
 
         $hurl = $this->getParameter('host');
 
+		#echo $hurl; die;
 
 
 	for($i=1;$i<=$navipages;$i++)
@@ -407,7 +408,9 @@ class GroupContent2Controller extends Controller
 
 	#$hurl = "https://port119.pl/top/d2/$forpagi";
 
-	$hurl = "https://port119.pl";
+#	$hurl = "https://port119.pl";
+	$hurl = $this->getParameter('host');
+
 
 
 	for($i=1; $i<=$navipages;$i++)
@@ -421,14 +424,17 @@ class GroupContent2Controller extends Controller
 		}
 	}
 
+	
+	if($page != $navipages)
+	{
+					if($navipages != 0)
+					{
+				$follow = $page+1;
+				$navi .= " || <a href=$hurl/$follow>następna</a>";
+					}
+	}
 
-        if($page != $navipages)
-        {        
-                $namepreg = preg_replace("/ /", "%20", $name);
-                $follow = $page+1;
-                $navi .= " || <a href=$hurl/top/d2/$namepreg/$follow>następna</a>";
-        }
-
+     
 
 	$gcdn = array();
 
