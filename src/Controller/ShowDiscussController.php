@@ -426,10 +426,14 @@ class ShowDiscussController extends Controller
                         }
                 }
 
+
 		if($page != $navipages)
 		{
-			$follow = $page+1;
-			$navi .= " || <a href=$hurl/$follow>następna</a>";
+                        if($navipages != 0)
+                        {
+			        $follow = $page+1;
+			        $navi .= " || <a href=$hurl/$follow>następna</a>";
+                        }
 		}
 
 
