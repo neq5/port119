@@ -73,6 +73,8 @@ class HelloWorldController extends Controller
 			}
 		}
 
+		
+
 		if($page != $navipages)
 		{
 			$follow = $page+1;
