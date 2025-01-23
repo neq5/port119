@@ -96,13 +96,13 @@ class GroupContent2Controller extends Controller
 		$em->flush();
 	}
 
-		$owhits = new GroupVists();
-		$owhits->setVisited($gid);
-		$owhits->setVisitor($user);
-		$owhits->setCreatedAt(new \DateTime());
+	$owhits = new GroupVists();
+	$owhits->setVisited($gid);
+	$owhits->setVisitor($user);
+	$owhits->setCreatedAt(new \DateTime());
 
-		$em->persist($owhits);
-		$em->flush();
+	$em->persist($owhits);
+	$em->flush();
 
 	$whits = $em->getRepository('App\Entity\GroupVists');
 
