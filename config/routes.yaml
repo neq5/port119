@@ -196,8 +196,10 @@ group_add:
       controller: App\Controller\GroupUserAdd::index
 
 group_own:
-      path: /top/group_own
+      path: /top/group_own/{page}
       controller: App\Controller\GroupUserOwn::index
+      defaults:
+        page: 1
 
 group_admin:
       path: /top/group_admin
