@@ -25,7 +25,7 @@ Twoje wątki<br /><br />
 		<tr><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
 
 
-{% for group in groups %}
+{% for group in thread_groups %}
 <tr>
 <td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}"><img src="/groupavatar/{{ group.id }}.jpeg"></a></td>
 <td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}">{{ group.name }}</a></td>
@@ -88,6 +88,8 @@ zamknięty
 {% endfor %}
 
 </table>
+
+{{ navi|raw }}
 
 {% else %}
 

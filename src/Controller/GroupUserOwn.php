@@ -26,20 +26,78 @@ use App\Entity\Group;
 
 use App\Entity\Gallery2;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 # groups gcdn abouts
 
 
 class GroupUserOwn extends Controller
 {
-	public function index(Request $request)
+
+
+	/**
+	* @var PaginatorInterface
+	*/
+
+	private $paginator;
+
+
+	/**
+	* @param PaginatorInterface $paginator
+	*/
+
+	public function __construct(
+		PaginatorInterface $paginator
+	) {
+		$this->paginator = $paginator;
+	}
+
+	public function index($page, PaginatorInterface $paginator)
 	{
+		
 		$username = $this->getUser();
 		$userid = $this->getUser()->getId();
+
+		$t_items = $this->getParameter('threads_page_items');
 
 		$last = array();
 		$ccnt = array();
 
+		$t_items = $this->getParameter('threads_page_items');
+
+
 		$groups = $this->getDoctrine()->getRepository(Group::class)->findBy(array('owner' => $userid));
+		$thread_groups = $this->paginator->paginate($groups, $page, $t_items);
+
+		$grcnt = count($groups);
+		$navipages = ceil($grcnt/$t_items);
+	
+		$navi = "";
+
+		#$hurl = "http://port119.tld";
+		$hurl = $this->getParameter('host') . "/top/group_own";
+
+		for($i=1;$i<=$navipages;$i++)
+		{
+			if($navipages == 1)
+			{
+				$navi = "";
+			}
+			elseif($i == $page)
+			{
+				$navi .= "| $i";
+			}
+			else
+			{
+				$navi .= "| <a href=$hurl/$i>$i</a>";
+			}
+		}
+
+		if($page != $navipages)
+		{
+			$follow = $page+1;
+			$navi .= " || <a href=$hurl/$follow>następna</a>";
+		}
 
 
 		$em = $this->getDoctrine()->getManager();
@@ -94,7 +152,7 @@ class GroupUserOwn extends Controller
 
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
 
-		return $this->render('port119/usergroup.html.twig', [ 'username' => $username, 'groups' => $groups, 'abouts' => $abouts, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' => $ccnt, 'last' => $last]);
+		return $this->render('port119/usergroup.html.twig', [ 'thread_groups' => $thread_groups, 'navi' => $navi, 'username' => $username, 'groups' => $groups, 'abouts' => $abouts, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' => $ccnt, 'last' => $last]);
 	}
 }
 
