@@ -26,13 +26,34 @@ use App\Entity\Group;
 
 use App\Entity\Gallery2;
 
+use Knp\Component\Pager\PaginatorInterface;
+
+
 # groups gcdn abouts
 
 
 class GroupUserAdmin extends Controller
 {
-	public function index(Request $request)
+	/**
+	* @var PaginatorInterface
+	*/
+
+	private $paginator;
+
+
+	/**
+	* @param PaginatorInterface $paginator
+	*/
+
+	public function __construct(
+		PaginatorInterface $paginator
+	) {
+		$this->paginator = $paginator;
+	}
+
+	public function index($page, PaginatorInterface $paginator)
 	{
+
 		$username = $this->getUser();
 		$userid = $this->getUser()->getId();
 #admin gcdn abouts
@@ -73,7 +94,44 @@ class GroupUserAdmin extends Controller
 
    		}
 
-  		$admin = $this->getDoctrine()->getRepository(GroupCredentials::class)->findBy(['accounts' => $userid]);
+		$t_items = $this->getParameter('threads_page_items');
+
+ 		$admin = $this->getDoctrine()->getRepository(GroupCredentials::class)->findBy(['accounts' => $userid]);
+		$thread_admin = $this->paginator->paginate($admin, $page, $t_items);
+
+		$grcnt = count($admin);
+
+		$navipages = ceil($grcnt/$t_items);
+
+		$navi = "";
+
+		#$hurl = "http://port119.tld";
+		$hurl = $this->getParameter('host');
+
+		for($i=1;$i<=$navipages;$i++)
+		{
+			if($navipages == 1)
+			{
+				$navi = "";
+			}
+			elseif($i == $page)
+			{
+				$navi .= "| $i";
+			}
+			else
+			{
+				$navi .= "| <a href=$hurl/$i>$i</a>";
+			}
+		}
+
+		if($page != $navipages)
+		{
+			$follow = $page+1;
+			$navi .= " || <a href=$hurl/$follow>następna</a>";
+		}
+
+			$lastcr = array();
+			$lastcrluty=array();
 
 		$em = $this->getDoctrine()->getManager();
 
@@ -89,7 +147,7 @@ class GroupUserAdmin extends Controller
 			$last["$gid"] = $lastcr[0][1];
 		}
 
-		return $this->render('port119/admgroup.html.twig', [ 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
+		return $this->render('port119/admgroup.html.twig', [ 'navi' => $navi, 'thread_admin' => $thread_admin, 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
 	}
 }
 

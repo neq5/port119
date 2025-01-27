@@ -202,8 +202,10 @@ group_own:
         page: 1
 
 group_admin:
-      path: /top/group_admin
+      path: /top/group_admin/{page}
       controller: App\Controller\GroupUserAdmin::index
+      defaults:
+            page: 1
 
 group_sub:
       path: /top/group_sub

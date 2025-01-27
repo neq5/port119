@@ -1,4 +1,4 @@
-u% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
 
@@ -11,7 +11,7 @@ u% extends 'base.html.twig' %}
 <table border=1>
 		<tr><td>Właściciel</td><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td><td>Akcja</td></tr>
 
-{% for adm in admin %}
+{% for adm in thread_admin %}
   {% if adm.accounts == username %}
 	<tr><td><a href="{{ path('userspace', {'uid': adm.groups.owner.id}) }}">{{ adm.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ adm.groups.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}">{{ adm.groups.name }}</a></td>
 <td>
@@ -57,10 +57,13 @@ u% extends 'base.html.twig' %}
 </tr>
 
 {% endif %}
+
 {% endfor %}
 
 
 </table>
+
+{{ navi|raw }}
 
 {% else %}
 Brak wątków
