@@ -20,9 +20,9 @@ parameters:
     facebook_secret: "25cef29759c22c1fe5ad0b8bbbc30e7c"
     googleplus_client_id: "428367507179-7nsf5k9hedmnr22bqdlon246tvjbtphn"
     googleplus_secret: "AotzVV60Pxv59b4xRtp3Tr-P"
-    page_items: "50"
-    threads_page_items: "50"
-    host: "https://port119.pl"
+    page_items: "2"
+    threads_page_items: "4"
+    host: "http://port119.tld"
 
 services:
    app.form.registration:
