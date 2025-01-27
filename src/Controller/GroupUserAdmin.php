@@ -106,7 +106,7 @@ class GroupUserAdmin extends Controller
 		$navi = "";
 
 		#$hurl = "http://port119.tld";
-		$hurl = $this->getParameter('host');
+		$hurl = $this->getParameter('host') . "/top/group_admin";
 
 		for($i=1;$i<=$navipages;$i++)
 		{
