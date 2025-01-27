@@ -207,8 +207,10 @@ group_sub:
       path: /top/group_sub
       controller: App\Controller\GroupSubscriptionsAdmin::index
 group_all:
-      path: /top/group_all
+      path: /top/group_all/{page}
       controller: App\Controller\GroupAllAdmin::index
+      defaults:
+            page: 1
 
 #tablica
 wall:

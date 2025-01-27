@@ -24,21 +24,77 @@ use App\Form\GroupCredentialsType;
 
 use App\Entity\Group;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 use App\Entity\Gallery2;
 
 
 
 class GroupAllAdmin extends Controller
 {
-	public function index(Request $request)
+
+	/**
+	* @var PaginatorInterface
+	*/
+
+	private $paginator;
+
+
+	/**
+	* @param PaginatorInterface $paginator
+	*/
+
+	public function __construct(
+		PaginatorInterface $paginator
+	) {
+		$this->paginator = $paginator;
+	}
+
+	public function index($page, PaginatorInterface $paginator)
 	{
+
 		$username = $this->getUser();
 		$userid = $this->getUser()->getId();
 
+		$t_items = $this->getParameter('threads_page_items');
 
 
 		$allgroups = $this->getDoctrine()->getRepository(Group::class)->findAll();
+		$thread_allgroups = $this->paginator->paginate($allgroups, $page, $t_items);
 
+		
+		$grcnt = count($allgroups);
+
+		$navipages = ceil($grcnt/$t_items);
+	
+		$navi = "";
+
+		#$hurl = "http://port119.tld";
+		$hurl = $this->getParameter('host') . "/top/group_all";
+
+		for($i=1;$i<=$navipages;$i++)
+		{
+			if($navipages == 1)
+			{
+				$navi = "";
+			}
+			elseif($i == $page)
+			{
+				$navi .= "| $i";
+			}
+			else
+			{
+				$navi .= "| <a href=$hurl/$i>$i</a>";
+			}
+		}
+
+		if($page != $navipages)
+		{
+			$follow = $page+1;
+			$navi .= " || <a href=$hurl/$follow>następna</a>";
+		}
+
+		
     		$gcdn = array();
 
 		$ccnt = array();
@@ -50,6 +106,7 @@ class GroupAllAdmin extends Controller
 
     		$groupscdn = $this->getDoctrine()->getRepository(GroupCredentials::class)->findAll();
 
+	
 		while(list($k, $v) = each($allgroups))
 		{
 			$gid = $v->getId();
@@ -107,7 +164,7 @@ class GroupAllAdmin extends Controller
 
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
 
-		return $this->render('port119/groupall.html.twig', [ 'username' => $username, 'abouts' => $abouts, 'allgroups' => $allgroups, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' =>$ccnt, 'last' => $last]);
+		return $this->render('port119/groupall.html.twig', [ 'grcnt' => $grcnt, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'username' => $username, 'abouts' => $abouts, 'allgroups' => $allgroups, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' =>$ccnt, 'last' => $last]);
 	}
 }
 
