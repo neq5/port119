@@ -14,8 +14,7 @@ Subskrybujesz<br />
 
 {% set subhash = [] %}
 
-{% for sub in subscriptions %}
-
+{% for sub in thread_subscriptions %}
 
 <tr><td><a href="{{ path('userspace', {'uid': sub.groups.owner.id}) }}">{{ sub.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': sub.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ sub.groups.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': sub.groups.name, 'page': 1}) }}">{{ sub.groups.name }}</a></td>
 <td>
@@ -57,6 +56,7 @@ Subskrybujesz<br />
 {% endfor %}
 </table>
 
+{{ navi|raw }}
 {% else %}
 Brak wątków
 {% endif %}

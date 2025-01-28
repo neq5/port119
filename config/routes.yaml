@@ -208,8 +208,11 @@ group_admin:
             page: 1
 
 group_sub:
-      path: /top/group_sub
+      path: /top/group_sub/{page}
       controller: App\Controller\GroupSubscriptionsAdmin::index
+      defaults: 
+        page: 1
+
 group_all:
       path: /top/group_all/{page}
       controller: App\Controller\GroupAllAdmin::index
