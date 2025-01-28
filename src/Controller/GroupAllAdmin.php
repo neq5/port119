@@ -59,7 +59,8 @@ class GroupAllAdmin extends Controller
 		$t_items = $this->getParameter('threads_page_items');
 
 
-		$allgroups = $this->getDoctrine()->getRepository(Group::class)->findAll();
+		#$allgroups = $this->getDoctrine()->getRepository(Group::class)->findAll();
+		$allgroups = $this->getDoctrine()->getRepository(Group::class)->findBy(array(), array('created_at' => 'DESC'));
 		$thread_allgroups = $this->paginator->paginate($allgroups, $page, $t_items);
 
 		
