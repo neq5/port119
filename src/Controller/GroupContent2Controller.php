@@ -420,7 +420,7 @@ class GroupContent2Controller extends Controller
 			$navi .= "| $i";
 		} else
 		{
-			$navi .= "| <a href=$hurl/top/d2/$forpagi/$i>$i</a>";
+			$navi .= "| <a href=$hurl/top/d2/$name/$i>$i</a>";
 		}
 	}
 
@@ -430,7 +430,7 @@ class GroupContent2Controller extends Controller
 					if($navipages != 0)
 					{
 						$follow = $page+1;
-						$navi .= " || <a href=$hurl/$follow>następna</a>";
+						$navi .= " || <a href=$hurl/top/d2/$name/$follow>następna</a>";
 					}
 	}
 

@@ -19,7 +19,7 @@
 <tr><td>Właściciel</td><td>Awatar</td><td>Nazwa</td><td>Posty / Ostatni</td><td>Admini</td><td>Aktywny?</td><td>Otwarty?</td><td>Opis</td><td>Data utworzenia</td></tr>
 
 {% for ag in thread_allgroups %}
-<tr><td><a href="{{ path('userspace', {'uid': ag.owner.id}) }}"> {{ ag.owner }}</td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}"><img src="/groupavatar/{{ ag.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}">{{ ag.name }}</td><td>{{ ccnt[ag.id] }} / {{ last[ag.id] }}</td>
+<tr><td><a href="{{ path('userspace', {'uid': ag.owner.id}) }}"> {{ ag.owner }}</td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}"><img src="/groupavatar/{{ ag.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': ag.name, 'page': 1}) }}">{{ ag.name }}</td><td>{{ ccnt[ag.id] }} / {% if ccnt[ag.id] %}  {{ lastf[ag.id] }} {% endif %}</td>
 
 <td>
 {% for k, v in gcdn %}
