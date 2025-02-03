@@ -45,7 +45,7 @@ zamknięty
 {% endif %}
 </td>
 <td>{{ abouts[ag.id] }}</td>
-<td>{{ ag.createdat|date('Y-m-d H-i-s') }}</td>
+<td>{{ luty[ag.id] }}</td>
 </tr>
 
 {% endfor %}
@@ -61,7 +61,7 @@ zamknięty
 		<table border=1>
 		<tr><td>Data</td><td>Nazwa grupy</td><td>Autor</td><td>Tytuł</td><td>Treśc</td></tr>
 		{% for k, v in commcreatedat %}
-			<tr><td>{{ commcreatedat[k]|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('discuss2', {'name': commgids[k], 'page': 1}) }}">{{ commgids[k] }}</td><td><a href="{{ path('userspace', {'uid': commaccounts2[k] }) }}">{{ commaccounts[k] }}</a></td><td>{{ commtitles[k] }}</td><td>{{ commcontent[k] }}</td></tr>
+			<tr><td> {{ commcreatedat[k]|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('discuss2', {'name': commgids[k], 'page': 1}) }}">{{ commgids[k] }}</td><td><a href="{{ path('userspace', {'uid': commaccounts2[k] }) }}">{{ commaccounts[k] }}</a></td><td>{{ commtitles[k] }}</td><td>{{ commcontent[k] }}</td></tr>
 		{% endfor %}
 		</table>
 

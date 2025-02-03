@@ -123,6 +123,8 @@ public function formatujDate($data_wejsciowa){
 		$allgroups = $this->getDoctrine()->getRepository(Group::class)->findBy(array(), array('created_at' => 'DESC'));
 		$thread_allgroups = $this->paginator->paginate($allgroups, $page, $t_items);
 
+		
+		
 
 		$grcnt = count($allgroups);
 
@@ -172,10 +174,13 @@ public function formatujDate($data_wejsciowa){
 			$ccnt["$gid"] = count($gcnt);
 
 			$query = $em->createQuery("select MAX(p.created_at) from App\Entity\Content2 p where p.groups = :gid")->setParameter('gid', $gid);
+
 			$lastcr = $query->getArrayResult();
 
 			$last["$gid"] = $lastcr[0][1];
 			$lastf["$gid"] = $this->formatujDate($lastcr[0][1]);
+		
+
 
 			#echo $last[$gid];
 
@@ -184,7 +189,23 @@ public function formatujDate($data_wejsciowa){
 
 			#echo "<pre>"; var_dump($lastcr2[0]["created_at"]); echo "</pre>";
 
+			$lastcr["$gid"] = $lastcr2[0]["created_at"];
+
+			#NEQ
+			$query2 = $em->createQuery('select p.created_at from App\Entity\Group p where p.id = :gid')->setParameter('gid', $gid);
+			$lastcr2 = $query2->getArrayResult();
+
+			#echo "<pre>"; var_dump($lastcr2[0]["created_at"]); echo "</pre>";
+
 			$toiter = $lastcr2[0]["created_at"];
+
+			while(list($k, $v) = each($toiter))
+			{
+				if($k == "date")
+				{
+					$luty["$gid"] = $this->formatujDate($v);
+				}
+			}
 		}
 
 		$groupscdn = $this->getDoctrine()->getRepository(GroupCredentials::class)->findAll();
@@ -314,7 +335,7 @@ public function formatujDate($data_wejsciowa){
         arsort($cntg);
 
 
-		return $this->render('port119/index.html.twig', [ 'lastf' => $lastf, 'cntg' => $cntg, 'ghitsarr' => $ghitsarr, 'username' => $username, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'grcnt' => $grcnt, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commaccounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'uid' => $uid]);
+		return $this->render('port119/index.html.twig', [ 'luty' => $luty, 'lastcr' => $lastcr, 'lastf' => $lastf, 'cntg' => $cntg, 'ghitsarr' => $ghitsarr, 'username' => $username, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'grcnt' => $grcnt, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commaccounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'uid' => $uid]);
 	}
 }
 

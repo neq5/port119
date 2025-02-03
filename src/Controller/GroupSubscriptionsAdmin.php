@@ -60,9 +60,8 @@ class GroupSubscriptionsAdmin extends Controller
 
 		$t_items = $this->getParameter('threads_page_items');
 
-
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
-
+		
 		$thraed_subscriptions = $this->paginator->paginate($subscriptions, $page, $t_items);
 
 		$grcnt = count($subscriptions);
