@@ -18,7 +18,7 @@ Subskrybujesz<br />
 
 <tr><td><a href="{{ path('userspace', {'uid': sub.groups.owner.id}) }}">{{ sub.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': sub.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ sub.groups.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': sub.groups.name, 'page': 1}) }}">{{ sub.groups.name }}</a></td>
 <td>
-{{ ccnt[sub.groups.id] }} / {{ last[sub.groups.id] }}
+{{ ccnt[sub.groups.id] }} / {{ lastf[sub.groups.id] }}
 </td>
 <td>
 	{% for k, v in gcdn %}
@@ -47,7 +47,7 @@ Subskrybujesz<br />
 <td>
 {{ abouts[sub.groups.id] }}</td>
 
-<td>{{ sub.groups.createdat|date('Y-m-d H-i-s') }}</td>
+<td>{{ luty[sub.groups.id] }}</td>
 
 <td><a href="{{ path('group_user_unsubscribe', {'groupid': sub.groups.id}) }}">nie subskrybuj</a> <a href="{{ path('group_user_show', {'id': sub.groups.id}) }}">pokaż</a></td>
 
