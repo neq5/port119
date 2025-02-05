@@ -162,6 +162,10 @@ public function formatujDate($data_wejsciowa){
 		$ccnt = array();
 		$last = array();
 
+		$luty = array();
+		$lastcr = array();
+		$lastf = array();
+
 		$gcdn = array();
 
 
@@ -206,6 +210,7 @@ public function formatujDate($data_wejsciowa){
 					$luty["$gid"] = $this->formatujDate($v);
 				}
 			}
+
 		}
 
 		$groupscdn = $this->getDoctrine()->getRepository(GroupCredentials::class)->findAll();
@@ -319,6 +324,7 @@ public function formatujDate($data_wejsciowa){
 
         $cntg = array();
 
+		
         while(list($k, $v) = each($cg))
         {
                 $gname = $v->getGroups();
