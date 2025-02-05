@@ -52,6 +52,84 @@ class GroupUserOwn extends Controller
 		$this->paginator = $paginator;
 	}
 
+	public  function getMinutes($minut)
+	{
+// j.pol
+	 switch($minut)
+	 {
+			case 0: return 0; break;
+			case 1: return 1; break;
+			case ($minut >= 2 && $minut <= 4):
+			case ($minut >= 22 && $minut <= 24):
+			case ($minut >= 32 && $minut <= 34):
+			case ($minut >= 42 && $minut <= 44):
+			case ($minut >= 52 && $minut <= 54): return "$minut minuty temu"; break;
+			default: return "$minut minut temu"; break;
+	}
+	return -1;
+
+	}
+public function formatujDate($data_wejsciowa){
+
+$timestamp = strtotime($data_wejsciowa);
+
+$now = time();
+
+if ($timestamp > $now) {
+  return 'Podana data nie może być większa od obecnej.';
+}
+
+$diff = $now - $timestamp;
+
+$minut = floor($diff/60);
+$godzin = floor($minut/60);
+$dni = floor($godzin/24);
+
+if ($minut <= 60) {
+  $res = $this->getMinutes($minut);
+  switch($res)
+  { 
+	case 0: return "przed chwilą";
+	case 1: return "minutę temu";
+	default: return $res;
+  }
+}
+
+$timestamp_wczoraj = $now-(60*60*24);
+$timestamp_przedwczoraj = $now-(60*60*24*2);
+
+if ($godzin > 0 && $godzin <= 6) {
+
+  $restMinutes = ($minut-(60*$godzin));
+  $res = $this->getMinutes($restMinutes);
+  if ($godzin == 1) {
+	return "Godzinę temu ";//.$res
+  } else {
+  if ($godzin >1 && $godzin<5)return "$godzin godziny temu ";
+  if ($godzin >4)return "$godzin godzin temu";
+  }
+
+} else if (date("Y-m-d", $timestamp) == date("Y-m-d", $now)) {//jesli dzisiaj
+  return "Dzisiaj ".date("H:i", $timestamp);
+} else if (date("Y-m-d", $timestamp_wczoraj) == date("Y-m-d", $timestamp)) {//jesli wczoraj
+  return "Wczoraj ".date("H:i", $timestamp);
+} else if (date("Y-m-d", $timestamp_przedwczoraj) == date("Y-m-d", $timestamp)) {//jesli wczoraj
+  return "Przedwczoraj ".date("H:i", $timestamp);
+}
+
+switch($dni)
+{ 
+  case ($dni < 7): return "$dni dni temu, ".date("Y-m-d", $timestamp); break;
+  case 7: return "Tydzień temu, ".date("Y-m-d", $timestamp); break;
+  case ($dni > 7 && $dni < 14): return "Ponad tydzień temu, ".date("Y-m-d", $timestamp); break;
+  case 14: return "Dwa tygodznie temu, ".date("Y-m-d", $timestamp); break;
+  case ($dni > 14 && $dni < 30): return "Ponad 2 tygodnie temu, ".date("Y-m-d", $timestamp); break;
+  case 30: case 31: return "Miesiąc temu"; break;
+  case ($dni > 31): return date("Y-m-d H:i", $timestamp); break;
+}
+return date("Y-m-d", $timestamp);
+}
+
 	public function index($page, PaginatorInterface $paginator)
 	{
 		
@@ -61,6 +139,9 @@ class GroupUserOwn extends Controller
 		$t_items = $this->getParameter('threads_page_items');
 
 		$last = array();
+		$lastf = array();
+		$luty = array();
+
 		$ccnt = array();
 
 		$t_items = $this->getParameter('threads_page_items');
@@ -113,6 +194,28 @@ class GroupUserOwn extends Controller
 			$lastcr = $query->getArrayResult();
 
 			$last["$gid"] = $lastcr[0][1];
+			$lastf["$gid"] = $this->formatujDate($lastcr[0][1]);
+
+			if($lastf["$gid"] == "1970-01-01 01:00")
+			{
+				$lastf["$gid"] = "";
+			}
+				#NEQ
+				$query2 = $em->createQuery('select p.created_at from App\Entity\Group p where p.id = :gid')->setParameter('gid', $gid);
+				$lastcr2 = $query2->getArrayResult();
+	
+				#echo "<pre>"; var_dump($lastcr2[0]["created_at"]); echo "</pre>";
+	
+				$toiter = $lastcr2[0]["created_at"];
+	
+				while(list($k, $v) = each($toiter))
+				{
+					if($k == "date")
+					{
+						$luty["$gid"] = $this->formatujDate($v);
+					}
+				}
+	
 		}
 
 
@@ -152,7 +255,7 @@ class GroupUserOwn extends Controller
 
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
 
-		return $this->render('port119/usergroup.html.twig', [ 'thread_groups' => $thread_groups, 'navi' => $navi, 'username' => $username, 'groups' => $groups, 'abouts' => $abouts, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' => $ccnt, 'last' => $last]);
+		return $this->render('port119/usergroup.html.twig', [ 'luty' => $luty, 'lastf' => $lastf, 'thread_groups' => $thread_groups, 'navi' => $navi, 'username' => $username, 'groups' => $groups, 'abouts' => $abouts, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' => $ccnt, 'last' => $last]);
 	}
 }
 

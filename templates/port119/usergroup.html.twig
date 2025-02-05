@@ -32,7 +32,7 @@ Twoje wątki<br /><br />
 <td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}">{{ group.name }}</a></td>
 
 <td>
-{{ ccnt[group.id] }} / {{ last[group.id] }}
+{{ ccnt[group.id] }} / {{ lastf[group.id] }}
 </td>
 
 <td>
@@ -68,7 +68,9 @@ zamknięty
 
 
 
-<td>{{ abouts[group.id] }}</td><td>{{ group.createdat|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('group_user_show', {'id': group.id}) }}">pokaż</a> <a href="{{ path('group_user_edit', {'id': group.id}) }}">edycja</a> <a href="{{ path('group_user_delete', {'id': group.id}) }}">usuń</a>
+<td>{{ abouts[group.id] }}</td><td>
+{{ luty[group.id] }}</td>
+<td><a href="{{ path('group_user_show', {'id': group.id}) }}">pokaż</a> <a href="{{ path('group_user_edit', {'id': group.id}) }}">edycja</a> <a href="{{ path('group_user_delete', {'id': group.id}) }}">usuń</a>
 
 {% if subhash[group.name] is defined %}
 
