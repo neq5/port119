@@ -236,6 +236,11 @@ return date("Y-m-d", $timestamp);
 				$lastf["$gid"] = "";
 			}
 
+			if($lastf["$gid"] == "1970-01-01 00:00")
+			{
+				$lastf["$gid"] = "";
+			}
+
 
 						#NEQ
 						$query2 = $em->createQuery('select p.created_at from App\Entity\Group p where p.id = :gid')->setParameter('gid', $gid);
