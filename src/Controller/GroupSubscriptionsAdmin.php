@@ -196,6 +196,10 @@ return date("Y-m-d", $timestamp);
 			$last["$gid"] = $lastcr[0][1];
 			$lastf["$gid"] = $this->formatujDate($lastcr[0][1]);
 
+			if($lastf["$gid"] == "1970-01-01 01:00")
+			{
+				$lastf["$gid"] = "";
+			}
 				#NEQ
 				$query2 = $em->createQuery('select p.created_at from App\Entity\Group p where p.id = :gid')->setParameter('gid', $gid);
 				$lastcr2 = $query2->getArrayResult();
