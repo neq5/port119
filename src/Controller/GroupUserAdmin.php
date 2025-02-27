@@ -261,6 +261,16 @@ return date("Y-m-d", $timestamp);
 		
 		}
 
+		if(!isset($luty))
+		{
+			$luty = "";
+		}
+
+		if(!isset($lastf))
+		{
+			$lastf = "";
+		}
+
 		return $this->render('port119/admgroup.html.twig', [ 'luty' => $luty, 'lastf' => $lastf, 'navi' => $navi, 'thread_admin' => $thread_admin, 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
 	}
 }

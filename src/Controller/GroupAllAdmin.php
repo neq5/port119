@@ -277,6 +277,12 @@ return date("Y-m-d", $timestamp);
 
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
 
+		if(!isset($luty))
+		{
+			$luty = "";
+			$navi = "";
+		}
+
 		return $this->render('port119/groupall.html.twig', [ 'luty' => $luty, 'lastf' => $lastf, 'grcnt' => $grcnt, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'username' => $username, 'abouts' => $abouts, 'allgroups' => $allgroups, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' =>$ccnt, 'last' => $last]);
 	}
 }
