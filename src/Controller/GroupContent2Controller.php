@@ -266,7 +266,11 @@ class GroupContent2Controller extends Controller
 
 	for($i=1;$i<=$navipages;$i++)
 	{
-		if($i == $page)
+		if($navipages == 1)
+		{
+			$navi = "";
+		}
+		elseif($i == $page)
 		{
 			$tree.= "| $i";
 		} else
@@ -415,7 +419,11 @@ class GroupContent2Controller extends Controller
 
 	for($i=1; $i<=$navipages;$i++)
 	{
-		if($i == $page)
+		if($navipages == 1)
+		{
+			$navi = "";
+		}
+		elseif($i == $page)
 		{
 			$navi .= "| $i";
 		} else
