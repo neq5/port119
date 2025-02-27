@@ -29,7 +29,7 @@ use App\Entity\Gallery2;
 use App\Form\Gallery2Type;
 
 use App\Entity\Hits;
-
+use App\Entity\GroupVists;
 
 class GroupUserController extends Controller
 {
@@ -793,6 +793,15 @@ class GroupUserController extends Controller
 		{
 			$em->remove($v);
 		}
+
+		$visits = $this->getDoctrine()->getRepository(GroupVists::class)->findBy(['visited' => $id]);
+
+		while(list($k, $v) = each($visits))
+		{
+			$em->remove($v);
+		}
+
+		
 	
 		
 

@@ -1366,9 +1366,11 @@ class GroupContent2Controller extends Controller
 		}
 
 
-		$content->setDeleted(true);
+#		$content->setDeleted(true);
 
-		$em->persist($content);
+		$em->remove($content);
+
+		#$em->persist($content);
 		$em->flush();
 
     $this->get('session')->getFlashBag()->add('success', 'Post skasowany.');
