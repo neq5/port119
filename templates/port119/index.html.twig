@@ -66,6 +66,21 @@ zamknięty
 <a href="{{ path('group_user_subscribe', {'groupid': ag.id}) }}">subskrybuj</a>
 {% endif %}
 
+<a href="{{ path('group_user_show', {'id': ag.id })}}">pokaż</a>
+
+{% for k, v in gcdn %}
+        {% if k == ag.name %}
+                {% for k1, v1 in v %}
+				{% if k1 == username %}
+					<a href="{{ path('group_user_edit', {'id': ag.id}) }}">edytuj</a>
+					{% if ag.owner == k1 %}
+						<a href="{{ path('group_user_delete', {'id': ag.id}) }}">usuń</a>
+					{% endif %}
+				{% endif %}
+                {% endfor %}
+        {% endif %}
+{% endfor %}
+
 </td>
 
 
