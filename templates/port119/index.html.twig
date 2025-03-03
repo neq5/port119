@@ -12,6 +12,16 @@
 			Wizyty: <a href="{{ path('userspace', {'uid': uid}) }}">na Twoim profilu</a>
 <br />			ostatnie wątki (ilość {{ grcnt }})
 
+{% set subhash = [] %}
+{% for sub in subscriptions %}
+{% for k, v in gcdn %}
+	{% if k == sub.groups.name %}
+		{% for k1, v1 in v %}
+			{% set subhash = subhash|merge({(sub.groups.name): 1}) %}}
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+{% endfor %}
 
 {% if allgroups %}
 
@@ -46,10 +56,22 @@ zamknięty
 </td>
 <td>{{ abouts[ag.id] }}</td>
 <td>{{ luty[ag.id] }}</td>
+
+<td>
+{% if subhash[ag.name] is defined %}
+
+<a href="{{ path('group_user_unsubscribe', {'groupid': ag.id}) }}">nie subskrybuj</a>
+
+{% else %}
+<a href="{{ path('group_user_subscribe', {'groupid': ag.id}) }}">subskrybuj</a>
+{% endif %}
+
+</td>
+
+
 </tr>
 
 {% endfor %}
-
 
 </table>
 {{ navi|raw }}

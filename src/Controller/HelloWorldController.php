@@ -8,6 +8,7 @@ use App\Entity\Group;
 use App\Entity\Hits;
 use App\Entity\GroupCredentials;
 use App\Entity\Content2;
+use App\Entity\Subscriptions;
 use Knp\Component\Pager\PaginatorInterface;
 
 class HelloWorldController extends Controller
@@ -124,7 +125,8 @@ public function formatujDate($data_wejsciowa){
 		$thread_allgroups = $this->paginator->paginate($allgroups, $page, $t_items);
 
 		
-		
+		$userid = $this->getUser()->getId();
+
 
 		$grcnt = count($allgroups);
 
@@ -341,7 +343,9 @@ public function formatujDate($data_wejsciowa){
         arsort($cntg);
 #neq
 
-		return $this->render('port119/index.html.twig', [ 'luty' => $luty, 'lastcr' => $lastcr, 'lastf' => $lastf, 'cntg' => $cntg, 'ghitsarr' => $ghitsarr, 'username' => $username, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'grcnt' => $grcnt, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commaccounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'uid' => $uid]);
+		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
+
+		return $this->render('port119/index.html.twig', [ 'subscriptions' => $subscriptions, 'luty' => $luty, 'lastcr' => $lastcr, 'lastf' => $lastf, 'cntg' => $cntg, 'ghitsarr' => $ghitsarr, 'username' => $username, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'grcnt' => $grcnt, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commaccounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'uid' => $uid]);
 	}
 }
 
