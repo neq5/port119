@@ -49,7 +49,22 @@ Subskrybujesz<br />
 
 <td>{{ luty[sub.groups.id] }}</td>
 
-<td><a href="{{ path('group_user_unsubscribe', {'groupid': sub.groups.id}) }}">nie subskrybuj</a> <a href="{{ path('group_user_show', {'id': sub.groups.id}) }}">pokaż</a></td>
+<td><a href="{{ path('group_user_unsubscribe', {'groupid': sub.groups.id}) }}">nie subskrybuj</a> <a href="{{ path('group_user_show', {'id': sub.groups.id}) }}">pokaż</a> 
+
+{% for k, v in gcdn %}
+        {% if k == sub.groups.name %}
+                {% for k1, v1 in v %}
+				{% if k1 == username %}
+					<a href="{{ path('group_user_edit', {'id': sub.groups.id}) }}">edytuj</a>
+					{% if sub.groups.owner == k1 %}
+						<a href="{{ path('group_user_delete', {'id': sub.groups.id}) }}">usuń</a>
+					{% endif %}
+				{% endif %}
+                {% endfor %}
+        {% endif %}
+{% endfor %}
+
+</td>
 
 
 </tr>
