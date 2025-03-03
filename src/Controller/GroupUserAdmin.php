@@ -271,7 +271,9 @@ return date("Y-m-d", $timestamp);
 			$lastf = "";
 		}
 
-		return $this->render('port119/admgroup.html.twig', [ 'luty' => $luty, 'lastf' => $lastf, 'navi' => $navi, 'thread_admin' => $thread_admin, 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
+		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
+
+		return $this->render('port119/admgroup.html.twig', [ 'subscriptions' => $subscriptions, 'luty' => $luty, 'lastf' => $lastf, 'navi' => $navi, 'thread_admin' => $thread_admin, 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
 	}
 }
 

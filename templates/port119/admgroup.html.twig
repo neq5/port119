@@ -5,6 +5,19 @@
 
 {% if admin %}
 
+{% set subhash = [] %}
+
+
+{% for sub in subscriptions %}
+{% for k, v in gcdn %}
+	{% if k == sub.groups.name %}
+		{% for k1, v1 in v %}
+			{% set subhash = subhash|merge({(sub.groups.name): 1}) %}
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+{% endfor %}
+
 - administrujesz 
 <br />
 
@@ -52,7 +65,32 @@
 
 
 <td>
-<a href="{{ path('group_user_show', {'id': adm.groups.id}) }}">pokaż</a> <a href="{{ path('group_user_edit', {'id': adm.groups.id, 'page': 1}) }}">edycja</a>
+
+{% if subhash[adm.groups.name] is defined %}
+
+<a href="{{ path('group_user_unsubscribe', {'groupid': adm.groups.id}) }}">nie subskrybuj</a>
+
+{% else %}
+<a href="{{ path('group_user_subscribe', {'groupid': adm.groups.id}) }}">subskrybuj</a>
+{% endif %}
+
+
+<a href="{{ path('group_user_show', {'id': adm.groups.id}) }}">pokaż</a>
+
+{% for k, v in gcdn %}
+        {% if k == adm.groups.name %}
+                {% for k1, v1 in v %}
+				{% if k1 == username %}
+					<a href="{{ path('group_user_edit', {'id': adm.groups.id}) }}">edytuj</a>
+					{% if adm.groups.owner == k1 %}
+						<a href="{{ path('group_user_delete', {'id': adm.groups.id}) }}">usuń</a>
+					{% endif %}
+				{% endif %}
+                {% endfor %}
+        {% endif %}
+{% endfor %}
+
+
 </td>
 </tr>
 
