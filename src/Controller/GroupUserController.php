@@ -372,6 +372,37 @@ class GroupUserController extends Controller
 			$file = $img->getBrochure();
 			$file = $avatarform->get('image')->getData();
 
+			$todelete = $avatarform->get('todelete')->getData();
+
+			if($todelete)
+			{
+#				$defaultFile = "/var/www/port119/default_user.jpg";
+				$defaultFile = "/var/www/port119/default.jpg";
+
+				
+#tu
+				#$fileName = $user_id.".jpeg";
+				$fileName = $id->getId() . ".jpeg";
+
+				#$avatarfile = $this->getParameter('avatardir');
+
+				$avatarfile = $this->getParameter('groupavatardir');
+
+				$targetfile = "$avatarfile/$fileName";
+
+				unlink($targetfile);
+
+				if(!copy($defaultFile, $targetfile)) { echo "błąd"; die; }
+
+				$this->get('session')->getFlashBag()->add('success', 'Avatar usunięty.');
+
+#				return $this->redirectToRoute('user_avatar');
+				return $this->redirectToRoute('group_user_edit', ['id' => $group_id]);
+
+
+			}
+
+
 			$ext = $file->guessExtension();
 
 			if($ext == "jpeg")
