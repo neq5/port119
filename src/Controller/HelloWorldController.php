@@ -345,7 +345,9 @@ public function formatujDate($data_wejsciowa){
 
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
 
-		return $this->render('port119/index.html.twig', [ 'subscriptions' => $subscriptions, 'luty' => $luty, 'lastcr' => $lastcr, 'lastf' => $lastf, 'cntg' => $cntg, 'ghitsarr' => $ghitsarr, 'username' => $username, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'grcnt' => $grcnt, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commaccounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'uid' => $uid]);
+		$ts = time();
+
+		return $this->render('port119/index.html.twig', [ 'ts' => $ts, 'subscriptions' => $subscriptions, 'luty' => $luty, 'lastcr' => $lastcr, 'lastf' => $lastf, 'cntg' => $cntg, 'ghitsarr' => $ghitsarr, 'username' => $username, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'grcnt' => $grcnt, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commaccounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'uid' => $uid]);
 	}
 }
 
