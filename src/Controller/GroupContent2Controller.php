@@ -472,10 +472,11 @@ class GroupContent2Controller extends Controller
 		$abouts[$v] = $aboutcontent;
 	}
 
+	$ts = time();
 
 
 	#return $this->render('port119/content2.html.twig', [ 'username' => $user, 'cnt' => $cnt, 'groupname' => $name, 'groupid' => $gid->getId() , 'tree' => $tree, 'avataruri' => $avataruri, 'gcdn' => $gcdn, 'abouts' => $abouts]);
-        return $this->render('port119/content3.html.twig', [ 'imgz' => $imgz, 'username' => $user, 'dates' => $dates, 'cnnt' => $cnnt, 'navi' => $navi, 'menus' => $menus, 'uids_iterations' => $uids_iterations, 'authors' => $authors, 'titles' => $titles, 'uids' => $uids, 'avataruri' => $avataruri, 'tree' => $tree, 'groupname' => $name, 'groupid' => $groupid, 'cnt' => $cnt, 'gcdn' => $gcdn, 'abouts' => $abouts, 'edits' => $edits, 'editmarkgroup' => $editmarkgroup]);
+        return $this->render('port119/content3.html.twig', [ 'ts' => $ts, 'imgz' => $imgz, 'username' => $user, 'dates' => $dates, 'cnnt' => $cnnt, 'navi' => $navi, 'menus' => $menus, 'uids_iterations' => $uids_iterations, 'authors' => $authors, 'titles' => $titles, 'uids' => $uids, 'avataruri' => $avataruri, 'tree' => $tree, 'groupname' => $name, 'groupid' => $groupid, 'cnt' => $cnt, 'gcdn' => $gcdn, 'abouts' => $abouts, 'edits' => $edits, 'editmarkgroup' => $editmarkgroup]);
 	}
 
 	public function reply(Request $request, Content2 $cid, Group $gid)
