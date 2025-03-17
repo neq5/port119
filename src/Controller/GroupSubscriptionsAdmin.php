@@ -258,8 +258,10 @@ return date("Y-m-d", $timestamp);
 
     		}
 
+		$ts = time();
 
-		return $this->render('port119/subscriptions.html.twig', [ 'luty' => $luty, 'lastf' => $lastf, 'thread_subscriptions' => $thraed_subscriptions,  'navi' => $navi, 'username' => $username, 'abouts' => $abouts, 'subscriptions' => $subscriptions, 'gcdn' => $gcdn, 'ccnt' => $ccnt, 'last' => $last]);
+
+		return $this->render('port119/subscriptions.html.twig', [ 'ts' => $ts, 'luty' => $luty, 'lastf' => $lastf, 'thread_subscriptions' => $thraed_subscriptions,  'navi' => $navi, 'username' => $username, 'abouts' => $abouts, 'subscriptions' => $subscriptions, 'gcdn' => $gcdn, 'ccnt' => $ccnt, 'last' => $last]);
 
 		#return new Response("tu");
 
