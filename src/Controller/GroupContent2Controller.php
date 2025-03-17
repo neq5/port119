@@ -1350,7 +1350,10 @@ class GroupContent2Controller extends Controller
 			return $this->redirectToRoute('discuss2', ['name' => "$gname", 'page' => 1]);
 		}
 
-		return $this->render('port119/content2_edit.html.twig', [ 'username' => $username, 'contentform' => $contentform->createView(), 'avfile' => $avfile]);
+		$ts = time();
+
+
+		return $this->render('port119/content2_edit.html.twig', [ 'ts' => $ts, 'username' => $username, 'contentform' => $contentform->createView(), 'avfile' => $avfile]);
 
 	}
 

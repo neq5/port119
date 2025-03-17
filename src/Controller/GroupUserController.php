@@ -718,9 +718,10 @@ class GroupUserController extends Controller
 
 		$hurl = $this->getParameter('host');
 
+		$ts = time();
 
 
-		return $this->render('port119/group_user_edit.html.twig', [ 'group_id' => $group_id, 'groupform' => $groupform->createView(), 'username' => $username, 'gcdn' => $gcdn, 'groupowner' => $groupowner, 'group_id' => $group_id, 'adminform' => $adminform->createView(), 'avatarform' => $avatarform->createView(), 'avatar' => $avatar, 'adminform2' => $adminform2->createView(), 'host' => $hurl]);
+		return $this->render('port119/group_user_edit.html.twig', [ 'ts' => $ts, 'group_id' => $group_id, 'groupform' => $groupform->createView(), 'username' => $username, 'gcdn' => $gcdn, 'groupowner' => $groupowner, 'group_id' => $group_id, 'adminform' => $adminform->createView(), 'avatarform' => $avatarform->createView(), 'avatar' => $avatar, 'adminform2' => $adminform2->createView(), 'host' => $hurl]);
 
 	}
 
