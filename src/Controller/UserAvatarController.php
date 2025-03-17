@@ -235,8 +235,10 @@ class UserAvatarController extends Controller
 		{
 			$avatar = "brak";
 		}
+		
+		$ts = time();
 
-		return $this->render('port119/useravatar.html.twig', [ 'avatar' => $avatar, 'username' => $username, 'avatarform' => $avatarform->createView(), ]);
+		return $this->render('port119/useravatar.html.twig', [ 'ts' => $ts, 'avatar' => $avatar, 'username' => $username, 'avatarform' => $avatarform->createView(), ]);
 	}
 	
 

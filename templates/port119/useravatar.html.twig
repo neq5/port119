@@ -3,10 +3,13 @@
 {% block body %}
 
 {% if avatar != "brak" %}
-<img src="{{ avatar|raw }}">
+<!-- <img src="{{ avatar|raw }}"> -->
+
+<img src="{{ avatar|raw}}?ts={{ ts }}">
 {% endif %}
 
 Awatar
+
 
 {{ form_start(avatarform) }}
 {{ form_widget(avatarform) }}
