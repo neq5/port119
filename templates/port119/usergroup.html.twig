@@ -28,7 +28,7 @@ Twoje wątki<br /><br />
 
 {% for group in thread_groups %}
 <tr>
-<td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}"><img src="/groupavatar/{{ group.id }}.jpeg"></a></td>
+<td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}"><img src="/groupavatar/{{ group.id }}.jpeg?ts={{ ts }}"></a></td>
 <td><a href="{{ path('discuss2', {'name': group.name, 'page': 1}) }}">{{ group.name }}</a></td>
 
 <td>
