@@ -273,7 +273,10 @@ return date("Y-m-d", $timestamp);
 
 		$subscriptions = $this->getDoctrine()->getRepository(Subscriptions::class)->findBy(['accounts' => $userid]);
 
-		return $this->render('port119/admgroup.html.twig', [ 'subscriptions' => $subscriptions, 'luty' => $luty, 'lastf' => $lastf, 'navi' => $navi, 'thread_admin' => $thread_admin, 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
+		$ts = time();
+
+
+		return $this->render('port119/admgroup.html.twig', [ 'ts' => $ts, 'subscriptions' => $subscriptions, 'luty' => $luty, 'lastf' => $lastf, 'navi' => $navi, 'thread_admin' => $thread_admin, 'username' => $username, 'abouts' => $abouts, 'gcdn' => $gcdn, 'admin' => $admin, 'ccnt' => $ccnt,'last' => $last]);
 	}
 }
 

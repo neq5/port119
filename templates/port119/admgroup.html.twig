@@ -26,7 +26,7 @@
 
 {% for adm in thread_admin %}
   {% if adm.accounts == username %}
-	<tr><td><a href="{{ path('userspace', {'uid': adm.groups.owner.id}) }}">{{ adm.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ adm.groups.id }}.jpeg"></a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}">{{ adm.groups.name }}</a></td>
+	<tr><td><a href="{{ path('userspace', {'uid': adm.groups.owner.id}) }}">{{ adm.groups.owner }}</a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}"><img src="/groupavatar/{{ adm.groups.id }}.jpeg?ts={{ ts }}"></a></td><td><a href="{{ path('discuss2', {'name': adm.groups.name, 'page': 1}) }}">{{ adm.groups.name }}</a></td>
 <td>
 {{ ccnt[adm.groups.id] }} / {{ lastf[adm.groups.id] }}
 </td>
