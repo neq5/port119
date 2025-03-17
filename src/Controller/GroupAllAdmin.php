@@ -283,7 +283,9 @@ return date("Y-m-d", $timestamp);
 			$navi = "";
 		}
 
-		return $this->render('port119/groupall.html.twig', [ 'luty' => $luty, 'lastf' => $lastf, 'grcnt' => $grcnt, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'username' => $username, 'abouts' => $abouts, 'allgroups' => $allgroups, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' =>$ccnt, 'last' => $last]);
+		$ts = time();
+
+		return $this->render('port119/groupall.html.twig', [ 'ts' => $ts, 'luty' => $luty, 'lastf' => $lastf, 'grcnt' => $grcnt, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'username' => $username, 'abouts' => $abouts, 'allgroups' => $allgroups, 'gcdn' => $gcdn, 'subscriptions' => $subscriptions, 'ccnt' =>$ccnt, 'last' => $last]);
 	}
 }
 
