@@ -25,8 +25,8 @@ brak obrazków<br>
 {% for k, v in pics %}
 
 
-<a href="/gallery/{{ uid }}/{{ gid }}/orig/{{ v }}">
-<img src="/gallery/{{ uid }}/{{ gid }}/min/{{ v }}">
+<a href="/gallery/{{ uid }}/{{ gid }}/orig/{{ v }}?ts={{ ts }}">
+<img src="/gallery/{{ uid }}/{{ gid }}/min/{{ v }}?ts={{ ts }}">
 </a> {% if titles2[v] is defined %} {{ titles2[v] }} {% else %}brak tytułu{% endif %} || <a href="{{ path('user_gallery_title_set', {'uid': uid, 'gid': gid, 'file': v}) }}">ustaw tytuł</a> || <a href="{{ path('user_gallery_comment', {'uid': uid, 'imgid': v}) }}">komentarze ({{ ccnt[v] }})</a> || <a href="{{ path('user_gallery_setavatar', {'uid': uid, 'gid': gid, 'id': v }) }}">użyj jako avatar</a> || <a href="{{ path('user_gallery_content_delete', {'uid': uid, 'gid': gid, 'file': v, 'uid': uid, 'gid': gid }) }}">Usuń obrazek</a> <input type="checkbox" name="{{ v }}" />
 <br>
 {% endfor %}

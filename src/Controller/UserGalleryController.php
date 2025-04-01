@@ -412,9 +412,10 @@ class UserGalleryController extends Controller
 		}
 
 
+		$ts = time();
 
 
-		return $this->render('port119/usergallery.html.twig',  ['username' => $username,  'userid' => $user_id, 'albumscnt' => $albumscnt, 'albums' => $albums, 'uid' => $user_id, 'picscnt' => $pics, 'ccnt' => $ccnt, 'allpicscnt' => $allpicscnt, 'albccnt' => $albccnt, 'fnames' => $filenames, 'albumsform' => $albumsform->createView()]);
+		return $this->render('port119/usergallery.html.twig',  ['ts' => $ts, 'username' => $username,  'userid' => $user_id, 'albumscnt' => $albumscnt, 'albums' => $albums, 'uid' => $user_id, 'picscnt' => $pics, 'ccnt' => $ccnt, 'allpicscnt' => $allpicscnt, 'albccnt' => $albccnt, 'fnames' => $filenames, 'albumsform' => $albumsform->createView()]);
 	}
 
 	public function gallerytitleset(Request $request, User $uid, $gid, $file)
@@ -1102,8 +1103,6 @@ class UserGalleryController extends Controller
 
 		$user_id = $this->getUser()->getId();
 
-
-
 		if($uid != $user_id)
 		{
 			return new Reponse("don't hack me yo");
@@ -1461,7 +1460,10 @@ class UserGalleryController extends Controller
 			$accnt += count($usercontent);
 		}
 
-		return $this->render('port119/usergallerycontent.html.twig', ['username' => $username, 'uid' => $user_id, 'gid' => $gid, 'ccnt' => $ccnt, 'pics' => $pics, 'picscnt' => $picscnt, 'form' => $form->createView(), 'titles2' => $titles2, 'uid' =>$uid, 'gid' => $gid, 'accnt' => $accnt]);
+		$ts = time();
+
+
+		return $this->render('port119/usergallerycontent.html.twig', ['ts' => $ts, 'username' => $username, 'uid' => $user_id, 'gid' => $gid, 'ccnt' => $ccnt, 'pics' => $pics, 'picscnt' => $picscnt, 'form' => $form->createView(), 'titles2' => $titles2, 'uid' =>$uid, 'gid' => $gid, 'accnt' => $accnt]);
 
 		
 	}
