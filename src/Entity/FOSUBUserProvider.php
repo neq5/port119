@@ -34,18 +34,18 @@ class FOSUBUserProvider extends BaseClass {
     public function __construct($us, $fb, EntityManagerInterface $em)   #(EntityManagerInterface $em)
     {
 	#$this->property = $property;
-	$this->em = $em;
+	
     }
 	 
 
     public function connect(UserInterface $user, UserResponseInterface $response) {
         $property = $this->getProperty($response);
-        
+        $this->em = $em;
+            
         $username = $response->getUsername();
 
         // On connect, retrieve the access token and the user id
         $service = $response->getResourceOwner()->getName();
-        
         $setter = 'set' . ucfirst($service);
         $setter_id = $setter . 'Id';
         $setter_token = $setter . 'AccessToken';
@@ -140,6 +140,7 @@ public function loadUserByUsername($username)
     {
 	$tmp = $response->getData();
 
+    
 	$repository = $this->em->getRepository(User::class);
 
 	$social_id = $response->getUsername();
