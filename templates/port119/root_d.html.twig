@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<img src="{{ avataruri }}"> || Wątek "{{ groupname }}" | Ilość wpisów: {{ cnt }} | <a href="{{ path('discuss2_new', {'id': groupid, 'page': 1}) }}">Nowy wpis</a>
+<img src="{{ avataruri }}?ts={{ ts }}"> || Wątek "{{ groupname }}" | Ilość wpisów: {{ cnt }} | <a href="{{ path('discuss2_new', {'id': groupid, 'page': 1}) }}">Nowy wpis</a>
 <br /><br />
 
 blah
@@ -31,7 +31,7 @@ Opis:
 	<table border=1>
 	<tr><td>Data</td><td>Awatar</td><td>Autor</td><td>Tytuł</td><td>Akcja</td><td>Treść</td></tr>
 {% for k, v in uids_iterations %}
-	<tr><td>{{ dates[k]|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('userspace', {'uid': v}) }}"><img src=/avatar/{{ v }}.jpeg></a></td><td><a href="{{ path('userspace', {'uid': v }) }}">{{ authors[k] }}</a></td><td>{{ titles[k] }}</td><td>{{ menus[k]|raw }}</td><td>{% if imgz[k] is defined %}<img src="/content/img/{{ imgz[k] }}">{% endif %}{{ cnnt[k] }}</td></tr>
+	<tr><td>{{ dates[k]|date('Y-m-d H-i-s') }}</td><td><a href="{{ path('userspace', {'uid': v}) }}"><img src=/avatar/{{ v }}.jpeg?ts={{ ts }}></a></td><td><a href="{{ path('userspace', {'uid': v }) }}">{{ authors[k] }}</a></td><td>{{ titles[k] }}</td><td>{{ menus[k]|raw }}</td><td>{% if imgz[k] is defined %}<img src="/content/img/{{ imgz[k] }}?ts={{ ts }}">{% endif %}{{ cnnt[k] }}</td></tr>
 
 
 {% endfor %}

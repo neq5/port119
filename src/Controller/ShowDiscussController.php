@@ -439,8 +439,11 @@ class ShowDiscussController extends Controller
 
 	#odpowiedz edytuj skasuj
 
+        $ts = time();
+
+
         #return $this->render('port119/content2.html.twig', [ 'username' => $user, 'cnt' => $cnt, 'groupname' => $name, 'groupid' => $gid->getId() , 'tree' => $tree]);
-        return $this->render('port119/root_d.html.twig', [ 'dates' => $dates, 'cnnt' => $cnnt, 'navi' => $navi, 'menus' => $menus, 'uids_iterations' => $uids_iterations, 'authors' => $authors, 'titles' => $titles, 'uids' => $uids, 'avataruri' => $avataruri, 'tree' => $tree, 'groupname' => $name, 'groupid' => $groupid, 'cnt' => $cnt, 'gcdn' => $gcdn, 'abouts' => $abouts, 'imgz' => $imgz]);
+        return $this->render('port119/root_d.html.twig', [ 'ts' => $ts, 'dates' => $dates, 'cnnt' => $cnnt, 'navi' => $navi, 'menus' => $menus, 'uids_iterations' => $uids_iterations, 'authors' => $authors, 'titles' => $titles, 'uids' => $uids, 'avataruri' => $avataruri, 'tree' => $tree, 'groupname' => $name, 'groupid' => $groupid, 'cnt' => $cnt, 'gcdn' => $gcdn, 'abouts' => $abouts, 'imgz' => $imgz]);
         }
 
 	}
