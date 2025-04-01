@@ -428,8 +428,10 @@ public function neq() { return "neq"; }
 
 */
 
+		$ts = time();
+
 #		return $this->render('port119/root2.html.twig', ['cntg' => $cntg, 'hits' => $hits, 'ghitsarr' => $ghitsarr, 'ghits' => $ghits, 'grcnt' => $grcnt, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'gcdn' => $gcdn, 'abouts' => $abouts, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commacounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi]);
-		return $this->render('port119/root3.html.twig', ['cntg' => $cntg, 'hits' => $hits, 'ghitsarr' => $ghitsarr, 'ghits' => $ghits, 'grcnt' => $grcnt, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'lastf' => $lastf, 'lastcrluty' => $lastcrluty, 'lastcr2' => $lastcr2, 'lastcr' => $lastcr, 'gcdn' => $gcdn, 'abouts' => $abouts, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commacounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'luty' => $luty]);
+		return $this->render('port119/root3.html.twig', ['ts' => $ts, 'cntg' => $cntg, 'hits' => $hits, 'ghitsarr' => $ghitsarr, 'ghits' => $ghits, 'grcnt' => $grcnt, 'allgroups' => $allgroups, 'ccnt' => $ccnt, 'last' => $last, 'lastf' => $lastf, 'lastcrluty' => $lastcrluty, 'lastcr2' => $lastcr2, 'lastcr' => $lastcr, 'gcdn' => $gcdn, 'abouts' => $abouts, 'commids' => $commids, 'commcontent' => $commcontent, 'commcreatedat' => $commcreatedat, 'commacounts2' => $commaccounts2, 'commaccounts' => $commaccounts, 'commtitles' => $commtitles, 'commgids' => $commgids, 'thread_allgroups' => $thread_allgroups, 'navi' => $navi, 'luty' => $luty]);
 
 	}
 
