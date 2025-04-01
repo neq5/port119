@@ -1021,8 +1021,11 @@ class UserGalleryController extends Controller
 
 			return $this->redirectToRoute('user_gallery_comment', ['uid' => $user_id, 'imgid' => $imgid]);
 		}
+
+		$ts = time();
+
 		
-		return $this->render('port119/gallery_comment.html.twig', ['username' => $username, 'gcform' => $gcform->createView(), 'gcnt' => $gcnt, 'content' => $content, 'imgid' => $imgid, 'uid' => $uid, 'editmark' => $editmark]);
+		return $this->render('port119/gallery_comment.html.twig', ['ts' => $ts, 'username' => $username, 'gcform' => $gcform->createView(), 'gcnt' => $gcnt, 'content' => $content, 'imgid' => $imgid, 'uid' => $uid, 'editmark' => $editmark]);
 
 
 		#return new Response("comment $username $uid - $imgid");
